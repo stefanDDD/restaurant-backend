@@ -1,8 +1,6 @@
 package com.ibm.restaurant.domain;
 
 
-
-
 public class Clients {
 
     private String id;

@@ -1,5 +1,6 @@
 package com.ibm.restaurant.domain;
 
+
 public class Table {
 
     private final Long id;
