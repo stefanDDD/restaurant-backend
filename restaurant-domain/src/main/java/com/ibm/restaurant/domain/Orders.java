@@ -1,20 +1,22 @@
 package com.ibm.restaurant.domain;
 
 
+import java.util.Objects;
+
 public class Orders {
 
-    private String orderId;
+    private final Long orderId;
     private String orderClient;
     private String orderTime;
     private String orderStatus;
     private String orderList;
 
-    public String getOrderId() {
-        return orderId;
+    public Orders(Long orderId, String orderList) {
+        this.orderId = orderId;
     }
 
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
+    public Long getOrderId() {
+        return orderId;
     }
 
     public String getOrderClient() {
@@ -48,4 +50,22 @@ public class Orders {
     public void setOrderList(String orderList) {
         this.orderList = orderList;
     }
+
+
+    @Override
+    public boolean equals(Object orderObject){
+        if(this == orderObject)
+            return true;
+        if(orderObject == null || getClass()!=orderObject.getClass())
+            return false;
+        Orders orders = (Orders) orderObject;
+        return Objects.equals(orderId, orders.orderId);
+    }
+    @Override
+    public int hashCode(){return Objects.hash(orderId);}
+    @Override
+    public String toString(){
+        return "Order{ id= "+ orderId+", order list= "+orderList+", order time= "+orderTime+", order status= "+orderStatus+", order client= "+orderClient+" }";
+    }
+
 }

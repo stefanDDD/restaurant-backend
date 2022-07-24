@@ -1,6 +1,7 @@
 package com.ibm.restaurant.orders;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ibm.restaurant.domain.Orders;
 
 public class OrdersDTO {
 
@@ -8,11 +9,12 @@ public class OrdersDTO {
     public String orderClient;
 
     @JsonProperty
-    private String orderTime;
+    public String orderTime;
 
     @JsonProperty
-    private String orderStatus;
+    public String orderStatus;
 
     @JsonProperty
-    private String orderList;
+    public String orderList;
+
 }
