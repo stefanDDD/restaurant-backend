@@ -34,4 +34,9 @@ public class TableRepositoryImpl implements ITableRepository {
         }
         return null;
     }
+
+    @Override
+    public HashSet<Table> getTableList() {
+        return new HashSet<>(dbSet);
+    }
 }

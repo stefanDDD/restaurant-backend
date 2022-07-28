@@ -7,8 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
+
 @RestController
-@RequestMapping("api/v1/table")
+@RequestMapping("api/v1/tables")
 public class TableController {
 
     @Autowired
@@ -28,5 +30,14 @@ public class TableController {
         TableDto dto = tableMapperService.mapFromDomain(table);
         return ResponseEntity.status(HttpStatus.OK).body(dto);
     }
+
+    @GetMapping
+    public ResponseEntity<HashSet<TableDto>> getTableList(){
+        HashSet<Table> tableList = tableService.getTableList();
+        HashSet<TableDto> tableDtoList = tableMapperService.mapFromDomain(tableList);
+        return ResponseEntity.status(HttpStatus.OK).body(tableDtoList);
+    }
+
+
 
 }
