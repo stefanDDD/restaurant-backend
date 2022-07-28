@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.persistence.criteria.Order;
 
 @RestController
-@RequestMapping("/api/clients")
+@RequestMapping("/api/v1/orders")
 public class OrdersController {
 
     @Autowired

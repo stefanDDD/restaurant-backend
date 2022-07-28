@@ -9,35 +9,40 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
 
+import static com.sun.xml.fastinfoset.alphabet.BuiltInRestrictedAlphabets.table;
+
 @RestController
 @RequestMapping("api/v1/tables")
 public class TableController {
 
     @Autowired
-    TableService tableService;
+    private TableService tableService;
     @Autowired
     private TableMapperService tableMapperService;
 
     @PostMapping
-    public ResponseEntity<Void> createTable(@RequestBody TableDto dto){
-       Table table = tableMapperService.mapToDomain(dto);
-       tableService.create(table);
-       return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseEntity<Void> createTable(@RequestBody TableDto dto) {
+        Table table = tableMapperService.mapToDomain(dto);
+        tableService.create(table);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<TableDto> getTableById(@PathVariable Long id){
+
         Table table = tableService.getTableById(id);
         TableDto dto = tableMapperService.mapFromDomain(table);
         return ResponseEntity.status(HttpStatus.OK).body(dto);
+
     }
 
     @GetMapping
-    public ResponseEntity<HashSet<TableDto>> getTableList(){
+    public ResponseEntity<HashSet <TableDto>> getTableList()
+    {
+
         HashSet<Table> tableList = tableService.getTableList();
         HashSet<TableDto> tableDtoList = tableMapperService.mapFromDomain(tableList);
         return ResponseEntity.status(HttpStatus.OK).body(tableDtoList);
     }
-
-
 
 }

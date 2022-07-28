@@ -1,8 +1,5 @@
 package com.ibm.restaurant.domain;
 
-
-import jdk.nashorn.internal.objects.annotations.Setter;
-
 import java.util.Objects;
 
 public class Table {

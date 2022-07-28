@@ -8,10 +8,10 @@ import java.util.HashSet;
 @Service
 public class TableMapperService {
 
-    public Table mapToDomain(TableDto dto){
+    public Table mapToDomain(TableDto dto) {
         Table table = new Table();
         table.setStatus(dto.status);
-        table.setStatus((dtr));
+        table.setCapacity(dto.capacity);
         return table;
     }
 
@@ -23,11 +23,15 @@ public class TableMapperService {
         return dto;
     }
 
-    public HashSet<TableDto> mapFromDomain(HashSet<Table> tableList){
-        HashSet<TableDto> listAux = new HashSet<>();
-        for(Table table: tableList){
+    public HashSet<TableDto> mapFromDomain(HashSet<Table> tableList)
+    {
+        HashSet <TableDto> listAux = new HashSet<>();
+        for(Table table : tableList)
+        {
             listAux.add(mapFromDomain(table));
+
         }
         return listAux;
     }
+
 }
