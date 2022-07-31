@@ -7,8 +7,19 @@ public class Clients {
     private String firstName;
     private String lastName;
     private String phoneNumber;
-    private String emailAdress;
 
+    private String emailAddress;
+
+    private String clientName;
+
+    public String getClientName() {
+        clientName = firstName+" "+lastName;
+        return clientName;
+    }
+
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
 
     public String getId() {
         return id;
@@ -43,10 +54,10 @@ public class Clients {
     }
 
     public String getEmailAdress() {
-        return emailAdress;
+        return emailAddress;
     }
 
     public void setEmailAdress(String emailAdress) {
-        this.emailAdress = emailAdress;
+        this.emailAddress = emailAdress;
     }
 }

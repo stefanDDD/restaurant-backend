@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Orders {
 
-    private final Long orderId;
+    private Long orderId;
     private String orderClient;
     private String orderTime;
     private String orderStatus;
@@ -17,6 +17,10 @@ public class Orders {
 
     public Long getOrderId() {
         return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 
     public String getOrderClient() {

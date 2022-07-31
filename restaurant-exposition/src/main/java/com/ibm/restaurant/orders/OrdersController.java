@@ -1,6 +1,5 @@
 package com.ibm.restaurant.orders;
 
-import com.ibm.restaurant.application.clients.ClientsService;
 import com.ibm.restaurant.application.orders.OrdersService;
 import com.ibm.restaurant.domain.Orders;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ public class OrdersController {
     public ResponseEntity<Void> createOrders(@RequestBody OrdersDTO ordersDTO){
 
         Orders orders = ordersMapperService.mapOrderToDomain(ordersDTO);
-        ordersService.create(orders);
+        ordersService.createOrders(orders);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

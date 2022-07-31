@@ -3,9 +3,9 @@ package com.ibm.restaurant.infrastructure.orders;
 import com.ibm.restaurant.domain.IOrdersRepository;
 import com.ibm.restaurant.domain.Orders;
 import com.ibm.restaurant.domain.Table;
-import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.criteria.Order;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -37,4 +37,10 @@ public class OrdersRepositoryImpl implements IOrdersRepository {
         }
         return null;
     }
+
+    @Override
+    public HashSet<Orders> getOrdersList() {
+        return new HashSet<>(ordersSet);
+    }
+
 }

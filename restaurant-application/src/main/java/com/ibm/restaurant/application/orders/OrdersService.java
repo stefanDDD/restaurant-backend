@@ -5,6 +5,8 @@ import com.ibm.restaurant.domain.Orders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+
 
 @Service
 public class OrdersService {
@@ -12,9 +14,14 @@ public class OrdersService {
     @Autowired
     private IOrdersRepository iOrdersRepository;
 
-    public void create(Orders orders){
-
+    public void createOrders(Orders orders){
+        long ordersId = getOrdersList().size()+1;
+        orders.setOrderId(ordersId);
         iOrdersRepository.createOrder(orders);
+    }
+
+    public HashSet<Orders> getOrdersList(){
+        return iOrdersRepository.getOrdersList();
     }
 
     public Orders getOrdersById(Long OrdersId){
