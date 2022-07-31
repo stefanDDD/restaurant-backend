@@ -15,8 +15,9 @@ import javax.persistence.criteria.Order;
 public class OrdersController {
 
     @Autowired
-    OrdersService ordersService;
+    private OrdersService ordersService;
 
+    @Autowired
     private OrdersMapperService ordersMapperService;
 
 
@@ -28,7 +29,7 @@ public class OrdersController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping
+    @GetMapping("/{ordersId}")
     public ResponseEntity<OrdersDTO> getOrdersById(@PathVariable Long ordersId){
         Orders orders = ordersService.getOrdersById(ordersId);
         OrdersDTO ordersDTO = ordersMapperService.mapOrdersFromDomain(orders);

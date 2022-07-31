@@ -65,7 +65,13 @@ public class Orders {
     public int hashCode(){return Objects.hash(orderId);}
     @Override
     public String toString(){
-        return "Order{ id= "+ orderId+", order list= "+orderList+", order time= "+orderTime+", order status= "+orderStatus+", order client= "+orderClient+" }";
+        return "Order{ " +
+                "id= "+ orderId+
+               // ", order list= "+orderList+'\''+
+               // ", order time= "+orderTime+'\''+
+               // ", order status= "+orderStatus+'\''+
+               // ", order client= "+orderClient+'\''+
+                " }";
     }
 
 }

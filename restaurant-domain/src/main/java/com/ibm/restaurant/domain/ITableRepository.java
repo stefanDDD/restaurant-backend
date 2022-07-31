@@ -9,4 +9,7 @@ public interface ITableRepository {
     Table getTableById(Long id);
 
     HashSet<Table> getTableList();
+
+    void updateTable(Table table);
+
 }

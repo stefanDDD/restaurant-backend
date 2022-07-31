@@ -6,9 +6,6 @@ import com.ibm.restaurant.domain.Orders;
 public class OrdersDTO {
 
     @JsonProperty
-    public String orderClient;
-
-    @JsonProperty
     public String orderTime;
 
     @JsonProperty
@@ -16,5 +13,8 @@ public class OrdersDTO {
 
     @JsonProperty
     public String orderList;
+
+    @JsonProperty
+    public long ordersId;
 
 }

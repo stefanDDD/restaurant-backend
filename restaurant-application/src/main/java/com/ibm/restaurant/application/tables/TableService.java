@@ -29,4 +29,12 @@ public class TableService {
     {
         return iTableRepository.getTableList();
     }
+
+    public void updateTable(Long id, Table table){
+        Table tableFromDB = getTableById(id);
+        tableFromDB.setCapacity(table.getCapacity());
+        tableFromDB.setStatus(table.getStatus());
+        iTableRepository.updateTable(tableFromDB);
+
+    }
 }
