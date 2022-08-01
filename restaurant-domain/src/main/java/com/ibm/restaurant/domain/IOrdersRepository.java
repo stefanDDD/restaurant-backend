@@ -11,4 +11,6 @@ public interface IOrdersRepository {
     Orders getOrdersById(Long orderId);
 
     HashSet<Orders> getOrdersList();
+
+    Orders cancelOrder(Long ordersId, Order orderStatus);
 }

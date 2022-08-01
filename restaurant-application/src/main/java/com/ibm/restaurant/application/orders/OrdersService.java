@@ -20,6 +20,11 @@ public class OrdersService {
         iOrdersRepository.createOrder(orders);
     }
 
+    public Orders cancelOrder(Long ordersId){
+
+        return iOrdersRepository.getOrdersById(ordersId);
+    }
+
     public HashSet<Orders> getOrdersList(){
         return iOrdersRepository.getOrdersList();
     }
