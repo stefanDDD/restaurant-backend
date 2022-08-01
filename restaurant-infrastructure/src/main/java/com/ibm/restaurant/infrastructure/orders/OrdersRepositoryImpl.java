@@ -45,12 +45,6 @@ public class OrdersRepositoryImpl implements IOrdersRepository {
     @Override
     public Orders cancelOrder(Long ordersId, Order orderStatus) {
         List<Orders> orders = new ArrayList<>(ordersSet);
-        for(Orders orders1: orders){
-            if(ordersId.equals(orders1.getOrderId()) & orders1.getOrderStatus().equals("IN_PROGRESS")){
-                orderStatus.equals("CANCELED");
-                return orders1;
-            }
-        }
         return null;
     }
 

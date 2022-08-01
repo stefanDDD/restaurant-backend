@@ -36,11 +36,14 @@ public class OrdersController {
 
     }
 
+
+
     @GetMapping("cancel/{ordersId}")
-    public ResponseEntity<OrdersDTO> cancelOrder(@PathVariable Long ordersId){
+    public ResponseEntity<Orders> cancelOrder(@PathVariable Long ordersId, Orders orderStatus1){
         Orders orders = ordersService.getOrdersById(ordersId);
+        Orders orderStatus = ordersService.cancelOrder(ordersId, orderStatus1);
         OrdersDTO ordersDTO = ordersMapperService.mapOrdersFromDomain(orders);
-        return ResponseEntity.status(HttpStatus.OK).body(ordersDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(orderStatus);
 
     }
 

@@ -17,13 +17,10 @@ public class OrdersService {
     public void createOrders(Orders orders){
         long ordersId = getOrdersList().size()+1;
         orders.setOrderId(ordersId);
+        orders.setOrderStatus(Orders.status.IN_PROGRESS);
         iOrdersRepository.createOrder(orders);
     }
 
-    public Orders cancelOrder(Long ordersId){
-
-        return iOrdersRepository.getOrdersById(ordersId);
-    }
 
     public HashSet<Orders> getOrdersList(){
         return iOrdersRepository.getOrdersList();
@@ -34,4 +31,9 @@ public class OrdersService {
     }
 
 
+    public Orders cancelOrder(Long ordersId, Orders orderStatus1) {
+        orderStatus1.setOrderStatus((Orders.status.CANCELED));
+        return iOrdersRepository.getOrdersById(ordersId);
+
+    }
 }

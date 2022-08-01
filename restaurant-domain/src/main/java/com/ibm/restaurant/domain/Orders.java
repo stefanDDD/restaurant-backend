@@ -1,6 +1,14 @@
 package com.ibm.restaurant.domain;
 
 
+import sun.util.calendar.BaseCalendar;
+
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 public class Orders {
@@ -8,7 +16,14 @@ public class Orders {
     private Long orderId;
     private String orderClient;
     private String orderTime;
-    private String orderStatus;
+
+    public status orderStatus;
+    public enum status{
+        IN_PROGRESS,
+        IN_DELIVERY,
+        DELIVERED,
+        CANCELED
+    }
     private String orderList;
 
     public Orders(Long orderId, String orderList) {
@@ -36,14 +51,16 @@ public class Orders {
     }
 
     public void setOrderTime(String orderTime) {
+        Calendar date1 = Calendar.getInstance();
+        orderTime = String.valueOf(date1.getTime());
         this.orderTime = orderTime;
     }
 
-    public String getOrderStatus() {
+    public status getOrderStatus() {
         return orderStatus;
     }
 
-    public void setOrderStatus(String orderStatus) {
+    public void setOrderStatus(status orderStatus) {
         this.orderStatus = orderStatus;
     }
 
