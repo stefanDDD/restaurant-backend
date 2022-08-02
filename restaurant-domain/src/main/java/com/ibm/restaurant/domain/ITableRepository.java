@@ -12,4 +12,6 @@ public interface ITableRepository {
 
     void updateTable(Table table);
 
+    void deleteTable(Table table);
+
 }

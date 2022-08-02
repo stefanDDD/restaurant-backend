@@ -12,4 +12,5 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @ComponentScan(basePackages = "com.ibm.restaurant")
 @EnableAutoConfiguration
 public class PersistenceConfig {
+
 }

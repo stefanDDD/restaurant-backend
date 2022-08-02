@@ -37,4 +37,9 @@ public class TableService {
         iTableRepository.updateTable(tableFromDB);
 
     }
+
+    public void deleteTable(Long id){
+        Table tableFromDB = getTableById(id);
+        iTableRepository.deleteTable(tableFromDB);
+    }
 }

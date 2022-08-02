@@ -54,6 +54,11 @@ public class TableController {
 
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTable(@PathVariable Long id){
+        tableService.deleteTable(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
+    }
 
 }

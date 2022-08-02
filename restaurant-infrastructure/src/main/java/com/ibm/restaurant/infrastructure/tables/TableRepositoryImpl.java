@@ -47,5 +47,11 @@ public class TableRepositoryImpl implements ITableRepository {
         dbSet.add(table);
     }
 
+    @Override
+    public void deleteTable(Table table) {
+        dbSet.remove(table);
+
+    }
+
 
 }

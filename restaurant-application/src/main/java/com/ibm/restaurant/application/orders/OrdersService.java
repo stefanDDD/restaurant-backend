@@ -31,8 +31,10 @@ public class OrdersService {
     }
 
 
-    public Orders cancelOrder(Long ordersId, Orders orderStatus1) {
-        orderStatus1.setOrderStatus((Orders.status.CANCELED));
+    public Orders cancelOrder(Long ordersId, Orders orders) {
+        Orders ordersFromDB = getOrdersById(ordersId);
+        ordersFromDB.setOrderStatus(orders.getOrderStatus());
+        ordersFromDB.setOrderStatus((Orders.status.CANCELED));
         return iOrdersRepository.getOrdersById(ordersId);
 
     }
