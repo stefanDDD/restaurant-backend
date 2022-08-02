@@ -1,7 +1,7 @@
 package com.ibm.restaurant.infrastructure.orders;
 
-import com.ibm.restaurant.domain.IOrdersRepository;
-import com.ibm.restaurant.domain.Orders;
+import com.ibm.restaurant.domain.orders.IOrdersRepository;
+import com.ibm.restaurant.domain.orders.Orders;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.Order;

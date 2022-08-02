@@ -1,7 +1,6 @@
 package com.ibm.restaurant.orders;
 
-import com.ibm.restaurant.domain.Orders;
-import com.ibm.restaurant.domain.Table;
+import com.ibm.restaurant.domain.orders.Orders;
 import com.ibm.restaurant.tables.TableMapperService;
 import org.springframework.stereotype.Service;
 

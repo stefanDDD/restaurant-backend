@@ -1,4 +1,4 @@
-package com.ibm.restaurant.domain;
+package com.ibm.restaurant.domain.clients;
 
 
 public class Clients {

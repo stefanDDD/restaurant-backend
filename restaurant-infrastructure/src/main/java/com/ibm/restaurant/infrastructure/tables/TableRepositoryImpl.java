@@ -1,7 +1,7 @@
 package com.ibm.restaurant.infrastructure.tables;
 
-import com.ibm.restaurant.domain.ITableRepository;
-import com.ibm.restaurant.domain.Table;
+import com.ibm.restaurant.domain.tables.ITableRepository;
+import com.ibm.restaurant.domain.tables.Tables;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -12,21 +12,21 @@ import java.util.Set;
 @Repository
 public class TableRepositoryImpl implements ITableRepository {
 
-    private Set<Table> dbSet = new HashSet<>();
+    private Set<Tables> dbSet = new HashSet<>();
 
     @Override
-    public void createTable(Table table) {
+    public void createTable(Tables table) {
         dbSet.add(table);
-        for (Table table1 : dbSet) {
+        for (Tables table1 : dbSet) {
 
             System.out.println("=============== db element: "+ table1.toString());
         }
     }
 
     @Override
-    public Table getTableById(Long id) {
-        List<Table> tables = new ArrayList<>(dbSet);
-        for(Table table: tables){
+    public Tables getTableById(Long id) {
+        List<Tables> tables = new ArrayList<>(dbSet);
+        for(Tables table: tables){
             if(id.equals(table.getId())){
 
                 return table;
@@ -35,20 +35,20 @@ public class TableRepositoryImpl implements ITableRepository {
         return null;
     }
 
-    public HashSet<Table> getTableList()
+    public HashSet<Tables> getTableList()
     {
 
         return new HashSet<>(dbSet);
     }
 
     @Override
-    public void updateTable(Table table) {
+    public void updateTable(Tables table) {
         dbSet.remove(table);
         dbSet.add(table);
     }
 
     @Override
-    public void deleteTable(Table table) {
+    public void deleteTable(Tables table) {
         dbSet.remove(table);
 
     }

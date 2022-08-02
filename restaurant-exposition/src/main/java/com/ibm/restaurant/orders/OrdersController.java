@@ -1,13 +1,11 @@
 package com.ibm.restaurant.orders;
 
 import com.ibm.restaurant.application.orders.OrdersService;
-import com.ibm.restaurant.domain.Orders;
+import com.ibm.restaurant.domain.orders.Orders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.persistence.criteria.Order;
 
 @RestController
 @RequestMapping("/api/v1/orders")

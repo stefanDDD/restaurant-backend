@@ -1,4 +1,4 @@
-package com.ibm.restaurant.domain;
+package com.ibm.restaurant.domain.orders;
 
 
 import sun.util.calendar.BaseCalendar;
@@ -88,10 +88,9 @@ public class Orders {
     public String toString(){
         return "Order{ " +
                 "id= "+ orderId+
-               // ", order list= "+orderList+'\''+
-               // ", order time= "+orderTime+'\''+
-               // ", order status= "+orderStatus+'\''+
-               // ", order client= "+orderClient+'\''+
+                 ", order list= "+orderList+'\''+
+                 ", order time= "+orderTime+'\''+
+                 ", order status= "+orderStatus+'\''+
                 " }";
     }
 

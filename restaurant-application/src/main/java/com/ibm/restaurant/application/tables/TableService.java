@@ -1,7 +1,7 @@
 package com.ibm.restaurant.application.tables;
 
-import com.ibm.restaurant.domain.ITableRepository;
-import com.ibm.restaurant.domain.Table;
+import com.ibm.restaurant.domain.tables.ITableRepository;
+import com.ibm.restaurant.domain.tables.Tables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,25 +13,25 @@ public class TableService {
     @Autowired
     private ITableRepository iTableRepository;
 
-    public void create(Table table) {
+    public void create(Tables table) {
         long id  = getTableList().size() + 1;
         table.setId(id);
         iTableRepository.createTable(table);
     }
 
-    public Table getTableById(Long id){
+    public Tables getTableById(Long id){
 
         return iTableRepository.getTableById(id);
 
     }
 
-    public HashSet<Table> getTableList()
+    public HashSet<Tables> getTableList()
     {
         return iTableRepository.getTableList();
     }
 
-    public void updateTable(Long id, Table table){
-        Table tableFromDB = getTableById(id);
+    public void updateTable(Long id, Tables table){
+        Tables tableFromDB = getTableById(id);
         tableFromDB.setCapacity(table.getCapacity());
         tableFromDB.setStatus(table.getStatus());
         iTableRepository.updateTable(tableFromDB);
@@ -39,7 +39,7 @@ public class TableService {
     }
 
     public void deleteTable(Long id){
-        Table tableFromDB = getTableById(id);
+        Tables tableFromDB = getTableById(id);
         iTableRepository.deleteTable(tableFromDB);
     }
 }

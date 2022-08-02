@@ -1,6 +1,6 @@
 package com.ibm.restaurant.tables;
 
-import com.ibm.restaurant.domain.Table;
+import com.ibm.restaurant.domain.tables.Tables;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -8,14 +8,14 @@ import java.util.HashSet;
 @Service
 public class TableMapperService {
 
-    public Table mapToDomain(TableDto dto) {
-        Table table = new Table();
+    public Tables mapToDomain(TableDto dto) {
+        Tables table = new Tables();
         table.setStatus(dto.status);
         table.setCapacity(dto.capacity);
         return table;
     }
 
-    public TableDto mapFromDomain(Table table){
+    public TableDto mapFromDomain(Tables table){
         TableDto dto = new TableDto();
         dto.capacity = table.getCapacity();
         dto.status = table.getStatus();
@@ -23,10 +23,10 @@ public class TableMapperService {
         return dto;
     }
 
-    public HashSet<TableDto> mapFromDomain(HashSet<Table> tableList)
+    public HashSet<TableDto> mapFromDomain(HashSet<Tables> tableList)
     {
         HashSet <TableDto> listAux = new HashSet<>();
-        for(Table table : tableList)
+        for(Tables table : tableList)
         {
             listAux.add(mapFromDomain(table));
 

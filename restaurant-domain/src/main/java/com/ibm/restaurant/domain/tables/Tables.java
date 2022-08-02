@@ -1,8 +1,8 @@
-package com.ibm.restaurant.domain;
+package com.ibm.restaurant.domain.tables;
 
 import java.util.Objects;
 
-public class Table {
+public class Tables {
 
     private Long id;
     private String capacity;
@@ -36,7 +36,7 @@ public class Table {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Table table = (Table) o;
+        Tables table = (Tables) o;
         return Objects.equals(id, table.id);
     }
 

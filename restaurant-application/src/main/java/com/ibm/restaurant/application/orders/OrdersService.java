@@ -1,7 +1,7 @@
 package com.ibm.restaurant.application.orders;
 
-import com.ibm.restaurant.domain.IOrdersRepository;
-import com.ibm.restaurant.domain.Orders;
+import com.ibm.restaurant.domain.orders.IOrdersRepository;
+import com.ibm.restaurant.domain.orders.Orders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

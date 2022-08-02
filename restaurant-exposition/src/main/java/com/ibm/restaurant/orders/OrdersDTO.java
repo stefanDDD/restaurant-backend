@@ -1,7 +1,7 @@
 package com.ibm.restaurant.orders;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.ibm.restaurant.domain.Orders;
+import com.ibm.restaurant.domain.orders.Orders;
 
 public class OrdersDTO {
 
