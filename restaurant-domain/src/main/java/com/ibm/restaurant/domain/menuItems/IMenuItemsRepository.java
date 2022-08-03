@@ -9,4 +9,8 @@ public interface IMenuItemsRepository {
     HashSet<MenuItems> getMenuItemsList();
 
     MenuItems getMenuItems(Long menuItemsId);
+
+    void updateMenuItems(MenuItems menuItems);
+
+    void deleteMenuItems(MenuItems menuItems);
 }

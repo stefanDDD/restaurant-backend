@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
+
 @RestController
 @RequestMapping("menu-items")
 public class MenuItemsController {
@@ -30,6 +32,23 @@ public class MenuItemsController {
         MenuItemsDTO menuItemsDTO = menuItemsMapperService.mapMenuItemsFromDomain(menuItems);
         return ResponseEntity.status(HttpStatus.OK).body(menuItemsDTO);
 
+    }
+    @GetMapping
+    public ResponseEntity<HashSet <MenuItemsDTO>> getMenuItemsList(){
+        HashSet<MenuItems> menuItemsList = menuItemsService.getMenuItemsList();
+        HashSet<MenuItemsDTO> menuItemsDTOList = menuItemsMapperService.mapMenuItemsFromDomainList(menuItemsList);
+        return ResponseEntity.status(HttpStatus.OK).body(menuItemsDTOList);
+    }
 
+    @PutMapping("/{menuItemsId}")
+    public ResponseEntity<Void> updateMenuItems(@PathVariable long menuItemsId, @RequestBody MenuItemsDTO menuItemsDTO){
+        MenuItems menuItems = menuItemsMapperService.mapMenuItemsToDomain(menuItemsDTO);
+        menuItemsService.updateMenuItems(menuItemsId, menuItems);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+    @DeleteMapping("/{menuItemsId}")
+    public ResponseEntity<Void> deleteMenuItems(@PathVariable Long menuItemsId){
+        menuItemsService.deleteMenuItems(menuItemsId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

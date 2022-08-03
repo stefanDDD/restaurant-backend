@@ -60,9 +60,9 @@ public class MenuItems {
     @Override
     public String toString(){
         return "Menu Item{"+
-               // ", Menu Item name= "+menuItemName+'\''+
-               // ", Menu Item price= "+menuItemPrice+'\''+
-               // ", Menu Item description= "+menuItemDescription+'\''+
+                ", Menu Item name= "+menuItemName+'\''+
+                ", Menu Item price= "+menuItemPrice+'\''+
+                ", Menu Item description= "+menuItemDescription+'\''+
                 " }";
     }
 }

@@ -4,6 +4,7 @@ import com.ibm.restaurant.domain.menuItems.MenuItems;
 import org.springframework.stereotype.Service;
 
 import java.lang.management.MemoryUsage;
+import java.util.HashSet;
 
 @Service
 public class MenuItemsMapperService {
@@ -23,6 +24,14 @@ public class MenuItemsMapperService {
         menuItemsDTO.menuItemsDescription = menuItems.getMenuItemDescription();
         menuItemsDTO.menuItemsId = menuItems.getMenuItemId();
         return menuItemsDTO;
+    }
+
+    public HashSet<MenuItemsDTO> mapMenuItemsFromDomainList(HashSet<MenuItems> menuItemsList){
+        HashSet<MenuItemsDTO> menuItemsAUX = new HashSet<>();
+        for(MenuItems menuItems: menuItemsList){
+            menuItemsAUX.add(mapMenuItemsFromDomain(menuItems));
+        }
+        return menuItemsAUX;
     }
 
 

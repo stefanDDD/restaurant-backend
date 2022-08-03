@@ -25,4 +25,18 @@ public class MenuItemsService {
     public HashSet<MenuItems> getMenuItemsList(){
         return iMenuItemsRepository.getMenuItemsList();
     }
+
+    public void updateMenuItems(Long menuItemsId, MenuItems menuItems){
+        MenuItems menuItemsFromDB = getMenuItems(menuItemsId);
+        menuItemsFromDB.setMenuItemName(menuItems.getMenuItemName());
+        menuItemsFromDB.setMenuItemPrice(menuItems.getMenuItemPrice());
+        menuItemsFromDB.setMenuItemDescription(menuItems.getMenuItemDescription());
+        iMenuItemsRepository.updateMenuItems(menuItemsFromDB);
+    }
+
+    public void deleteMenuItems(Long menuItemsId){
+        MenuItems menuItemsFromDB = getMenuItems(menuItemsId);
+        iMenuItemsRepository.deleteMenuItems(menuItemsFromDB);
+    }
+
 }

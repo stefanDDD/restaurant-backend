@@ -38,4 +38,15 @@ public class MenuItemsRepositoryimpl implements IMenuItemsRepository {
     public HashSet<MenuItems> getMenuItemsList() {
         return new HashSet<>(dbMenuItemsSet);
     }
+
+    @Override
+    public void updateMenuItems(MenuItems menuItems){
+        dbMenuItemsSet.remove(menuItems);
+        dbMenuItemsSet.add(menuItems);
+    }
+
+    @Override
+    public void deleteMenuItems(MenuItems menuItems){
+        dbMenuItemsSet.remove(menuItems);
+    }
 }
