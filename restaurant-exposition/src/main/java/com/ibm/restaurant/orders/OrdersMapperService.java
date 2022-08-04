@@ -4,6 +4,8 @@ import com.ibm.restaurant.domain.orders.Orders;
 import com.ibm.restaurant.tables.TableMapperService;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+
 @Service
 public class OrdersMapperService {
 
@@ -14,7 +16,6 @@ public class OrdersMapperService {
         orders.setOrderTime(ordersDTO.orderTime);
         orders.setOrderStatus(ordersDTO.orderStatus);
         orders.setOrderList(ordersDTO.orderList);
-
         return orders;
     }
 
@@ -26,6 +27,15 @@ public class OrdersMapperService {
         ordersDTO.orderTime = orders.getOrderTime();
         return ordersDTO;
     }
+
+    public HashSet<OrdersDTO> mapOrdersFromDomainList(HashSet<Orders> ordersList){
+        HashSet<OrdersDTO> ordersAUX = new HashSet<>();
+        for(Orders orders: ordersList){
+            ordersAUX.add(mapOrdersFromDomain(orders));
+        }
+        return ordersAUX;
+    }
+
 
 
 }

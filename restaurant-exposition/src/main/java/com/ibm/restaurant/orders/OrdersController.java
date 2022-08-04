@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
+
 @RestController
 @RequestMapping("/api/v1/orders")
 public class OrdersController {
@@ -34,6 +36,20 @@ public class OrdersController {
 
     }
 
+    @GetMapping("/ordersPrice")
+    public ResponseEntity<OrdersDTO> getOrdersPrice(@PathVariable Double ordersPrice){
+        Orders orders = ordersService.getOrdersPrice(ordersPrice);
+        OrdersDTO ordersDTO = ordersMapperService.mapOrdersFromDomain(orders);
+        return ResponseEntity.status(HttpStatus.OK).body(ordersDTO);
+    }
+
+    @GetMapping
+    public ResponseEntity<HashSet <OrdersDTO>> getOrderList(){
+        HashSet<Orders> ordersList = ordersService.getOrdersList();
+        HashSet<OrdersDTO> ordersDTOList = ordersMapperService.mapOrdersFromDomainList(ordersList);
+        return ResponseEntity.status(HttpStatus.OK).body(ordersDTOList);
+
+    }
 
 
     @GetMapping("cancel/{ordersId}")

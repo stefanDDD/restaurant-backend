@@ -20,7 +20,7 @@ public class OrdersRepositoryImpl implements IOrdersRepository {
         ordersSet.add(orders);
         for(Orders orders1: ordersSet){
 
-           System.out.println("Order: "+orders1.toString());
+            System.out.println("Order: "+orders1.toString());
         }
 
     }
@@ -34,6 +34,11 @@ public class OrdersRepositoryImpl implements IOrdersRepository {
                 return order;
             }
         }
+        return null;
+    }
+
+    @Override
+    public Orders getOrdersPrice(Double ordersPrice) {
         return null;
     }
 

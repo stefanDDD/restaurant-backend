@@ -10,6 +10,8 @@ public interface IOrdersRepository {
 
     Orders getOrdersById(Long orderId);
 
+    Orders getOrdersPrice(Double ordersPrice);
+
     HashSet<Orders> getOrdersList();
 
     Orders cancelOrder(Long ordersId, Order orderStatus);

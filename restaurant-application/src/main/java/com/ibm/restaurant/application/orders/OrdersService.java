@@ -26,11 +26,15 @@ public class OrdersService {
         return iOrdersRepository.getOrdersList();
     }
 
-    public Orders getOrdersById(Long OrdersId){
-        return iOrdersRepository.getOrdersById(OrdersId);
+
+
+    public Orders getOrdersById(Long ordersId){
+        return iOrdersRepository.getOrdersById(ordersId);
     }
 
-
+    public Orders getOrdersPrice(Double ordersPrice){
+        return iOrdersRepository.getOrdersPrice(ordersPrice);
+    }
     public Orders cancelOrder(Long ordersId, Orders orders) {
         Orders ordersFromDB = getOrdersById(ordersId);
         ordersFromDB.setOrderStatus(orders.getOrderStatus());
