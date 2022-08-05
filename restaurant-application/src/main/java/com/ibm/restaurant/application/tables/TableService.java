@@ -30,16 +30,18 @@ public class TableService {
         return iTableRepository.getTableList();
     }
 
-    public void updateTable(Long id, Tables table){
-        Tables tableFromDB = getTableById(id);
-        tableFromDB.setCapacity(table.getCapacity());
-        tableFromDB.setStatus(table.getStatus());
-        iTableRepository.updateTable(tableFromDB);
-
+    public void updateTable(Long id, Tables table)
+    {
+        Tables tableFromDb=getTableById(id);
+        tableFromDb.setCapacity(table.getCapacity());
+        tableFromDb.setStatus(table.getStatus());
+        iTableRepository.updateTable(tableFromDb);
     }
 
-    public void deleteTable(Long id){
-        Tables tableFromDB = getTableById(id);
-        iTableRepository.deleteTable(tableFromDB);
+    public void deleteTable(Long id) {
+        Tables tableFromDb = getTableById(id);
+        iTableRepository.deleteTable(tableFromDb);
     }
+
+
 }

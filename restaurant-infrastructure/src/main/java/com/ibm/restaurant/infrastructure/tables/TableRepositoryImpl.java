@@ -2,6 +2,7 @@ package com.ibm.restaurant.infrastructure.tables;
 
 import com.ibm.restaurant.domain.tables.ITableRepository;
 import com.ibm.restaurant.domain.tables.Tables;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -12,46 +13,32 @@ import java.util.Set;
 @Repository
 public class TableRepositoryImpl implements ITableRepository {
 
-    private Set<Tables> dbSet = new HashSet<>();
+    @Autowired
+    private ITableRepositorySdj repositorySdj;
 
     @Override
     public void createTable(Tables table) {
-        dbSet.add(table);
-        for (Tables table1 : dbSet) {
-
-            System.out.println("=============== db element: "+ table1.toString());
-        }
+        repositorySdj.save(table);
     }
 
     @Override
     public Tables getTableById(Long id) {
-        List<Tables> tables = new ArrayList<>(dbSet);
-        for(Tables table: tables){
-            if(id.equals(table.getId())){
-
-                return table;
-            }
-        }
-        return null;
+        return repositorySdj.findById(id).orElse(null);
     }
 
-    public HashSet<Tables> getTableList()
-    {
+    public HashSet<Tables> getTableList() {
 
-        return new HashSet<>(dbSet);
+        return new HashSet<>(repositorySdj.findAll());
     }
 
     @Override
     public void updateTable(Tables table) {
-        dbSet.remove(table);
-        dbSet.add(table);
+        repositorySdj.save(table);
     }
 
     @Override
     public void deleteTable(Tables table) {
-        dbSet.remove(table);
-
+        repositorySdj.delete(table);
     }
-
-
 }
+

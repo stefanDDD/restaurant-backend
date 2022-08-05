@@ -44,19 +44,18 @@ public class TableController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateTable(@PathVariable long id, @RequestBody TableDto dto){
-
-        Tables table = tableMapperService.mapToDomain(dto);
-        tableService.updateTable(id, table);
+    public ResponseEntity<Void> updateTable(@PathVariable Long id, @RequestBody TableDto dto)
+    {
+        Tables table=tableMapperService.mapToDomain(dto);
+        tableService.updateTable(id,table);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTable(@PathVariable Long id){
+    public ResponseEntity<Void> deleteTable(@PathVariable Long id) {
         tableService.deleteTable(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-
     }
+
 
 }
