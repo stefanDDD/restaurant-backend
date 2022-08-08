@@ -2,29 +2,56 @@ package com.ibm.restaurant.domain.orders;
 
 
 
+import com.ibm.restaurant.domain.menuItems.MenuItems;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Objects;
+import javax.persistence.*;
+import java.awt.*;
+import java.util.*;
+import java.util.List;
 
+@Entity
+@javax.persistence.Table(name = "ONLINE_ORDERS")
 public class Orders {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ORDER_ID")
     private Long orderId;
+    @Column(name = "CUSTOMER_ID")
     private String orderClient;
+    @Column(name = "ORDER_DATE")
     private String orderTime;
-
+    @Column(name = "DELIVERY_STATUS")
     public status orderStatus;
+
+    public String orderList;
+
+    public String getOrderList() {
+        return orderList;
+    }
+
+    public void setOrderList(String orderList) {
+        this.orderList = orderList;
+    }
+
+    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private final List<MenuItems> menuItems = new ArrayList<>();
+
+    public List<MenuItems> getMenuItems(){
+        return menuItems;
+    }
+
+
+    public Orders() {
+
+    }
+
     public enum status{
         IN_PROGRESS,
         IN_DELIVERY,
         DELIVERED,
         CANCELED
     }
-    private String orderList;
 
     public Orders(Long orderId, String orderList) {
         this.orderId = orderId;
@@ -64,14 +91,6 @@ public class Orders {
         this.orderStatus = orderStatus;
     }
 
-    public String getOrderList() {
-        return orderList;
-    }
-
-    public void setOrderList(String orderList) {
-        this.orderList = orderList;
-    }
-
 
     @Override
     public boolean equals(Object orderObject){
@@ -88,10 +107,11 @@ public class Orders {
     public String toString(){
         return "Order{ " +
                 "id= "+ orderId+
-                 ", order list= "+orderList+'\''+
                  ", order time= "+orderTime+'\''+
                  ", order status= "+orderStatus+'\''+
                 " }";
     }
+
+
 
 }

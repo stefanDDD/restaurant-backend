@@ -1,5 +1,7 @@
 package com.ibm.restaurant.application.orders;
 
+import com.ibm.restaurant.domain.menuItems.IMenuItemsRepository;
+import com.ibm.restaurant.domain.menuItems.MenuItems;
 import com.ibm.restaurant.domain.orders.IOrdersRepository;
 import com.ibm.restaurant.domain.orders.Orders;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ public class OrdersService {
 
     @Autowired
     private IOrdersRepository iOrdersRepository;
+
 
     public void createOrders(Orders orders){
         long ordersId = getOrdersList().size()+1;
@@ -35,11 +38,15 @@ public class OrdersService {
     public Orders getOrdersPrice(Double ordersPrice){
         return iOrdersRepository.getOrdersPrice(ordersPrice);
     }
-    public Orders cancelOrder(Long ordersId, Orders orders) {
+
+
+    public void cancelOrder(Long ordersId, Orders orders) {
         Orders ordersFromDB = getOrdersById(ordersId);
-        ordersFromDB.setOrderStatus(orders.getOrderStatus());
+        //ordersFromDB.setOrderStatus(orders.getOrderStatus());
         ordersFromDB.setOrderStatus((Orders.status.CANCELED));
-        return iOrdersRepository.getOrdersById(ordersId);
+        iOrdersRepository.cancelOrder(ordersFromDB);
 
     }
+
+
 }

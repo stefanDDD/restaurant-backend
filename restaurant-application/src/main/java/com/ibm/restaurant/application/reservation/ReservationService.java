@@ -7,6 +7,7 @@ import com.ibm.restaurant.domain.tables.Tables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -27,4 +28,6 @@ public class ReservationService {
     public List<Reservation> findAllByClientName(String clientName) {
         return reservationRepository.findAllByClientName(clientName);
     }
+
+
 }

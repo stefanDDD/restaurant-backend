@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashSet;
 
 @RestController
-@RequestMapping("menu-items")
+@RequestMapping("/menu-items")
 public class MenuItemsController {
 
     @Autowired
@@ -21,8 +21,9 @@ public class MenuItemsController {
 
     @PostMapping
     public ResponseEntity<Void> createMenuItems(@RequestBody MenuItemsDTO menuItemsDTO){
+        Long ordersId = menuItemsDTO.ordersId;
         MenuItems menuItems = menuItemsMapperService.mapMenuItemsToDomain(menuItemsDTO);
-        menuItemsService.createMenuItems(menuItems);
+        menuItemsService.createMenuItems(menuItems, ordersId);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -33,7 +34,7 @@ public class MenuItemsController {
         return ResponseEntity.status(HttpStatus.OK).body(menuItemsDTO);
 
     }
-    @GetMapping
+    @GetMapping()
     public ResponseEntity<HashSet <MenuItemsDTO>> getMenuItemsList(){
         HashSet<MenuItems> menuItemsList = menuItemsService.getMenuItemsList();
         HashSet<MenuItemsDTO> menuItemsDTOList = menuItemsMapperService.mapMenuItemsFromDomainList(menuItemsList);
@@ -51,4 +52,11 @@ public class MenuItemsController {
         menuItemsService.deleteMenuItems(menuItemsId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+/*
+    @GetMapping("/{menuItemsName}")
+    public ResponseEntity<List<MenuItemsDTO>> findAllByName(@PathVariable String menuItemsName){
+        List<MenuItemsDTO> menuItemsDTOList = menuItemsService.findAllByName(menuItemsName).stream().map(menuItemsMapperService::mapMenuItemsFromDomain).collect(Collectors.toList());
+        return ResponseEntity.ok(menuItemsDTOList);
+    }
+*/
 }

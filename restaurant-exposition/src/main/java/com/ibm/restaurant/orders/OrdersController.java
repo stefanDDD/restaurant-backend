@@ -22,7 +22,6 @@ public class OrdersController {
 
     @PostMapping
     public ResponseEntity<Void> createOrders(@RequestBody OrdersDTO ordersDTO){
-
         Orders orders = ordersMapperService.mapOrderToDomain(ordersDTO);
         ordersService.createOrders(orders);
         return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -53,11 +52,10 @@ public class OrdersController {
 
 
     @GetMapping("cancel/{ordersId}")
-    public ResponseEntity<Orders> cancelOrder(@PathVariable Long ordersId, Orders orderStatus1){
-        Orders orders = ordersService.getOrdersById(ordersId);
-        Orders orderStatus = ordersService.cancelOrder(ordersId, orderStatus1);
-        OrdersDTO ordersDTO = ordersMapperService.mapOrdersFromDomain(orders);
-        return ResponseEntity.status(HttpStatus.OK).body(orderStatus);
+    public ResponseEntity<Void> cancelOrder(@PathVariable Long ordersId,@RequestBody OrdersDTO ordersDTO){
+        Orders orders = ordersMapperService.mapOrderToDomain(ordersDTO);
+        ordersService.cancelOrder(ordersId, orders);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
     }
 

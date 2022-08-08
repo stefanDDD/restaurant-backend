@@ -7,4 +7,5 @@ public interface IReservationRepository {
     Reservation createReservation(Reservation reservation);
 
     List<Reservation> findAllByClientName(String clientName);
+
 }
