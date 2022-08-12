@@ -47,10 +47,7 @@ public class Orders {
     }
 
     public enum status{
-        IN_PROGRESS,
-        IN_DELIVERY,
-        DELIVERED,
-        CANCELED
+
     }
 
     public Orders(Long orderId, String orderList) {
