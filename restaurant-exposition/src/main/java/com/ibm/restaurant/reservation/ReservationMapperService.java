@@ -12,6 +12,7 @@ public class ReservationMapperService {
         if (dto != null) {
             Reservation reservation = new Reservation();
             reservation.setClientName(dto.clientName);
+            reservation.setPersonNo(dto.personNo);
             return reservation;
         }
         return null;
@@ -23,6 +24,7 @@ public class ReservationMapperService {
             dto.reservationId = reservation.getReservationId();
             dto.tableDto = mapTableFromDomain(reservation.getTable());
             dto.clientName = reservation.getClientName();
+            dto.personNo = reservation.getPersonNo();
             return dto;
         }
 

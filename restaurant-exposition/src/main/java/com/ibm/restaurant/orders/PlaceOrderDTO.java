@@ -6,7 +6,7 @@ import java.util.List;
 
 public class PlaceOrderDTO {
     @JsonProperty
-    public Long tableId;
+    public Long customerId;
 
     @JsonProperty
     public List<Long> menuItems;

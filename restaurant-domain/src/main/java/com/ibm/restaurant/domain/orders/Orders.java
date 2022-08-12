@@ -5,12 +5,10 @@ package com.ibm.restaurant.domain.orders;
 import com.ibm.restaurant.domain.menuItems.MenuItems;
 
 import javax.persistence.*;
-import java.awt.*;
 import java.util.*;
-import java.util.List;
 
 @Entity
-@javax.persistence.Table(name = "ONLINE_ORDERS")
+@Table(name = "ONLINE_ORDERS")
 public class Orders {
 
     @Id
@@ -19,35 +17,45 @@ public class Orders {
     private Long orderId;
     @Column(name = "CUSTOMER_ID")
     private String orderClient;
+
+    public Orders(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
     @Column(name = "ORDER_DATE")
     private String orderTime;
     @Column(name = "DELIVERY_STATUS")
-    public status orderStatus;
+    public OrderStatus orderStatus;
 
-    public String orderList;
-
-    public String getOrderList() {
-        return orderList;
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
     }
 
-    public void setOrderList(String orderList) {
-        this.orderList = orderList;
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
-    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private final List<MenuItems> menuItems = new ArrayList<>();
-
-    public List<MenuItems> getMenuItems(){
+    public Set<MenuItems> getMenuItems() {
         return menuItems;
     }
 
-
-    public Orders() {
-
+    public void setMenuItems(Set<MenuItems> menuItems) {
+        this.menuItems = menuItems;
     }
 
-    public enum status{
+    @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "CUSTOMER_ID", updatable = false, insertable = false)
+    private com.ibm.restaurant.domain.customer.Customer customer;
+    @ManyToMany
+    @JoinTable(
+            name = "ONLINE_ORDERS_MENU_ITEMS",
+            joinColumns = @JoinColumn(name = "ORDER_ID"),
+            inverseJoinColumns = @JoinColumn(name = "MENU_ITEM_ID"))
+    private Set<MenuItems> menuItems = new HashSet<>();
 
+
+    public void addMenuItem(MenuItems menuItems) {
+        this.menuItems.add(menuItems);
     }
 
     public Orders(Long orderId, String orderList) {
@@ -80,35 +88,12 @@ public class Orders {
         this.orderTime = orderTime;
     }
 
-    public status getOrderStatus() {
-        return orderStatus;
+    public com.ibm.restaurant.domain.customer.Customer getCustomer(){
+        return customer;
     }
 
-    public void setOrderStatus(status orderStatus) {
-        this.orderStatus = orderStatus;
+    public void seCustomer(com.ibm.restaurant.domain.customer.Customer customer) {
+        this.customer = customer;
     }
-
-
-    @Override
-    public boolean equals(Object orderObject){
-        if(this == orderObject)
-            return true;
-        if(orderObject == null || getClass()!=orderObject.getClass())
-            return false;
-        Orders orders = (Orders) orderObject;
-        return Objects.equals(orderId, orders.orderId);
-    }
-    @Override
-    public int hashCode(){return Objects.hash(orderId);}
-    @Override
-    public String toString(){
-        return "Order{ " +
-                "id= "+ orderId+
-                 ", order time= "+orderTime+'\''+
-                 ", order status= "+orderStatus+'\''+
-                " }";
-    }
-
-
 
 }

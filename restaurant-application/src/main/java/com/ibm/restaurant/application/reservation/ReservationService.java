@@ -1,5 +1,7 @@
 package com.ibm.restaurant.application.reservation;
 
+import com.ibm.restaurant.domain.exception.BusinessException;
+import com.ibm.restaurant.domain.exception.NotFoundException;
 import com.ibm.restaurant.domain.reservations.Reservation;
 import com.ibm.restaurant.domain.reservations.IReservationRepository;
 import com.ibm.restaurant.domain.tables.ITableRepository;
@@ -21,8 +23,17 @@ public class ReservationService {
 
     public void createReservation(Reservation reservation, Long tableId) {
         Tables table = tableRepository.getTableById(tableId);
+        if(table == null){
+            throw new NotFoundException(String.format("Table with id %s does not exist in the system!", tableId));
+        }
+        if (Integer.parseInt(table.getCapacity()) >= reservation.getPersonNo()) {
         reservation.setTable(table);
         reservationRepository.createReservation(reservation);
+        } else {
+            String messsage = "Table capacity is lower than person number!";
+            String code = "BAD_REQUEST";
+            throw new BusinessException(messsage, code);
+        }
     }
 
     public List<Reservation> findAllByClientName(String clientName) {

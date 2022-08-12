@@ -1,13 +1,17 @@
 package com.ibm.restaurant.orders;
 
 import com.ibm.restaurant.application.orders.OrdersService;
+import com.ibm.restaurant.domain.menuItems.IMenuItemsRepository;
 import com.ibm.restaurant.domain.orders.Orders;
+import com.ibm.restaurant.menuItems.MenuItemsMapperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/orders")
@@ -15,49 +19,29 @@ public class OrdersController {
 
     @Autowired
     private OrdersService ordersService;
-
     @Autowired
     private OrdersMapperService ordersMapperService;
+    @Autowired
+    private MenuItemsMapperService menuItemsMapperService;
 
 
     @PostMapping
-    public ResponseEntity<Void> createOrders(@RequestBody OrdersDTO ordersDTO){
-        Orders orders = ordersMapperService.mapOrderToDomain(ordersDTO);
-        ordersService.createOrders(orders);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
-
-    @GetMapping("/{ordersId}")
-    public ResponseEntity<OrdersDTO> getOrdersById(@PathVariable Long ordersId){
-        Orders orders = ordersService.getOrdersById(ordersId);
-        OrdersDTO ordersDTO = ordersMapperService.mapOrdersFromDomain(orders);
-        return ResponseEntity.status(HttpStatus.OK).body(ordersDTO);
-
-    }
-
-    @GetMapping("/ordersPrice")
-    public ResponseEntity<OrdersDTO> getOrdersPrice(@PathVariable Double ordersPrice){
-        Orders orders = ordersService.getOrdersPrice(ordersPrice);
-        OrdersDTO ordersDTO = ordersMapperService.mapOrdersFromDomain(orders);
-        return ResponseEntity.status(HttpStatus.OK).body(ordersDTO);
+    public ResponseEntity<OrdersDTO> createOrders(@RequestBody final PlaceOrderDTO placeOrderDTO){
+        Orders orders = ordersService.createOrders(placeOrderDTO.customerId, placeOrderDTO.menuItems);
+        return ResponseEntity.status(HttpStatus.CREATED).body(ordersMapperService.mapOrdersFromDomain(orders));
     }
 
     @GetMapping
-    public ResponseEntity<HashSet <OrdersDTO>> getOrderList(){
-        HashSet<Orders> ordersList = ordersService.getOrdersList();
-        HashSet<OrdersDTO> ordersDTOList = ordersMapperService.mapOrdersFromDomainList(ordersList);
-        return ResponseEntity.status(HttpStatus.OK).body(ordersDTOList);
+    public ResponseEntity<List<OrdersDTO>> getOrderList(){
+        List<OrdersDTO> ordersList = ordersService.getOrdersList().stream().map(ordersMapperService::mapOrdersFromDomain).collect(Collectors.toList());
+        return ResponseEntity.status(HttpStatus.OK).body(ordersList);
 
     }
 
 
-    @GetMapping("cancel/{ordersId}")
-    public ResponseEntity<Void> cancelOrder(@PathVariable Long ordersId,@RequestBody OrdersDTO ordersDTO){
-        Orders orders = ordersMapperService.mapOrderToDomain(ordersDTO);
-        ordersService.cancelOrder(ordersId, orders);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
-    }
+
+
 
 
 }

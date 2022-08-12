@@ -20,29 +20,25 @@ public class OrdersRepositoryImpl implements IOrdersRepository {
     private IOrdersRepositorySdj iOrdersRepositorySdj;
 
     @Override
-    public void createOrder(Orders orders) {
-        iOrdersRepositorySdj.save(orders);
+    public Orders createOrder(Orders orders) {
+        return iOrdersRepositorySdj.save(orders);
     }
 
     @Override
-    public Orders getOrdersById(Long orderId) {
-        return iOrdersRepositorySdj.findById(orderId).orElse(null);
+    public List<Orders> getOrdersList() {
+        return iOrdersRepositorySdj.findAll();
     }
 
     @Override
-    public Orders getOrdersPrice(Double ordersPrice) {
-        return null;
+    public Orders cancelOrder(Orders orders) {
+
+        return iOrdersRepositorySdj.save(orders);
     }
 
     @Override
-    public HashSet<Orders> getOrdersList() {
-        return new HashSet<>(iOrdersRepositorySdj.findAll());
-    }
+    public Orders updateOrders(Orders orders) {
 
-    @Override
-    public void cancelOrder(Orders orders) {
-
-        iOrdersRepositorySdj.save(orders);
+        return iOrdersRepositorySdj.save(orders);
     }
 
 

@@ -2,51 +2,59 @@ package com.ibm.restaurant.application.menuItems;
 
 import com.ibm.restaurant.domain.menuItems.IMenuItemsRepository;
 import com.ibm.restaurant.domain.menuItems.MenuItems;
-import com.ibm.restaurant.domain.orders.IOrdersRepository;
-import com.ibm.restaurant.domain.orders.Orders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MenuItemsService {
 
     @Autowired
     public IMenuItemsRepository iMenuItemsRepository;
-    @Autowired
-    private IOrdersRepository iOrdersRepository;
 
 
-    public void createMenuItems(MenuItems menuItems, Long ordersId){
-        Orders orders = iOrdersRepository.getOrdersById(ordersId);
-        menuItems.setOrders(orders);
-        iMenuItemsRepository.createMenuItem(menuItems);
+    public MenuItems createMenuItems(MenuItems menuItems) throws Exception {
+        return Optional.ofNullable(iMenuItemsRepository.createMenuItems(menuItems)).orElseThrow(() -> new Exception("Unable to create menu item"));
     }
-
-    public MenuItems getMenuItems(Long menuItemsId){
-        return iMenuItemsRepository.getMenuItems(menuItemsId);
-    }
-
-    public HashSet<MenuItems> getMenuItemsList(){
+    public List<MenuItems> getMenuItemsList(){
         return iMenuItemsRepository.getMenuItemsList();
     }
 
-    public void updateMenuItems(Long menuItemsId, MenuItems menuItems){
-        MenuItems menuItemsFromDB = getMenuItems(menuItemsId);
-        menuItemsFromDB.setMenuItemName(menuItems.getMenuItemName());
-        menuItemsFromDB.setMenuItemPrice(menuItems.getMenuItemPrice());
-        menuItemsFromDB.setMenuItemDescription(menuItems.getMenuItemDescription());
-        iMenuItemsRepository.updateMenuItems(menuItemsFromDB);
+    public MenuItems getMenuItems(Long menuItemsId) {
+        return iMenuItemsRepository.getMenuItems(menuItemsId);
     }
 
-    public void deleteMenuItems(Long menuItemsId){
-        MenuItems menuItemsFromDB = getMenuItems(menuItemsId);
+    public MenuItems updateMenuItems(MenuItems menuItems) {
+        MenuItems menuItemsFromDB = getMenuItems(menuItems.getMenuItemId());
+
+        if (menuItemsFromDB != null) {
+            menuItemsFromDB.setMenuItemName(menuItems.getMenuItemName());
+            menuItemsFromDB.setMenuItemPrice(menuItems.getMenuItemPrice());
+            menuItemsFromDB.setMenuItemDescription(menuItems.getMenuItemDescription());
+            iMenuItemsRepository.updateMenuItems(menuItemsFromDB);
+        }
+        return null;
+    }
+
+
+    public void deleteMenuItems(Long menuItemsId) {
+
+        MenuItems menuItemsFromDB = iMenuItemsRepository.getMenuItems(menuItemsId);
         iMenuItemsRepository.deleteMenuItems(menuItemsFromDB);
     }
-/*
-    public List<MenuItems> findAllByName(String menuItemsName){
-        return iMenuItemsRepository.findAllByName(menuItemsName);
+
+    public List<MenuItems> findAll(String description, Integer pageNumber, Integer nrOfItems) {
+        if(pageNumber == null) {
+            pageNumber = 0;
+        }
+
+        if(nrOfItems == null) {
+            nrOfItems = 10;
+        }
+
+        return iMenuItemsRepository.findAll(description, pageNumber, nrOfItems);
     }
-*/
 }

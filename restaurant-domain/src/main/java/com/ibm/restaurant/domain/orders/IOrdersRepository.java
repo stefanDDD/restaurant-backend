@@ -3,17 +3,18 @@ package com.ibm.restaurant.domain.orders;
 
 import javax.persistence.criteria.Order;
 import java.util.HashSet;
+import java.util.List;
 
 public interface IOrdersRepository {
 
-    void createOrder(Orders orders);
+    Orders createOrder(final Orders orders);
 
-    Orders getOrdersById(Long orderId);
+    Orders updateOrders(final Orders orders);
 
-    Orders getOrdersPrice(Double ordersPrice);
+    Orders cancelOrder(final Orders orderStatus);
 
-    HashSet<Orders> getOrdersList();
+    List<Orders> getOrdersList();
 
-    void cancelOrder(Orders orderStatus);
+
 
 }

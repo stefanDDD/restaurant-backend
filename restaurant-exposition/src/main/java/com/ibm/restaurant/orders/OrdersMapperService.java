@@ -21,39 +21,17 @@ public class OrdersMapperService {
 
     @Autowired
     private MenuItemsMapperService menuItemsMapperService;
-    public Orders mapOrderToDomain(final OrdersDTO ordersDTO){
-            Orders orders = new Orders();
-            orders.setOrderId(ordersDTO.ordersId);
-            orders.setOrderTime(ordersDTO.orderTime);
-            orders.setOrderStatus(ordersDTO.orderStatus);
-            return orders;
 
-    }
-
-
-    public OrdersDTO mapOrdersFromDomain(Orders orders){
-            OrdersDTO ordersDTO = new OrdersDTO();
+    public OrdersDTO mapOrdersFromDomain(final Orders orders) {
+        OrdersDTO ordersDTO = new OrdersDTO();
+        if(orders != null){
             ordersDTO.ordersId = orders.getOrderId();
             ordersDTO.orderStatus = orders.getOrderStatus();
             ordersDTO.orderTime = orders.getOrderTime();
-        ordersDTO.ordersList = orders.getMenuItems().stream().map(MenuItems::getMenuItemName).collect(Collectors.toList());
-        ordersDTO.menuItemsDTO = orders.getMenuItems().stream().map(menuItemsMapperService::mapMenuItemsFromDomain).collect(Collectors.toSet());
-        ordersDTO.ordersPrice = orders.getMenuItems().stream().mapToDouble(MenuItems::getMenuItemPrice).sum();
-
+            ordersDTO.menuItemsDTO = orders.getMenuItems().stream().map(menuItemsMapperService::mapMenuItemsFromDomain).collect(Collectors.toSet());
+            ordersDTO.customerId = orders.getCustomer().getCustomerId();
+        }
         return ordersDTO;
     }
-
-
-
-
-    public HashSet<OrdersDTO> mapOrdersFromDomainList(HashSet<Orders> ordersList){
-        HashSet<OrdersDTO> ordersAUX = new HashSet<>();
-        for(Orders orders: ordersList){
-            ordersAUX.add(mapOrdersFromDomain(orders));
-        }
-        return ordersAUX;
-    }
-
-
 
 }

@@ -14,4 +14,6 @@ public class ReservationDTO {
 
     @JsonProperty
     public String clientName;
+    @JsonProperty
+    public Integer personNo;
 }

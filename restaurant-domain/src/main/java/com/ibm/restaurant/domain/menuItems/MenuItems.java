@@ -1,16 +1,13 @@
 package com.ibm.restaurant.domain.menuItems;
 
-import com.ibm.restaurant.domain.orders.Orders;
-
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.math.BigDecimal;
+
 
 @Entity
-@javax.persistence.Table(name = "MENU_ITEMS")
+@Table(name = "MENU_ITEMS")
 public class MenuItems {
-
+//DONE HERE
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MENU_ITEM_ID")
@@ -23,29 +20,10 @@ public class MenuItems {
     private String menuItemDescription;
 
     @Column(name = "PRICE")
-    private Float menuItemPrice;
+    private BigDecimal menuItemPrice;
 
+    public MenuItems(){
 
-    public Float ordersPrice;
-
-    public Float getOrdersPrice() {
-        return ordersPrice;
-    }
-
-    public void setOrdersPrice(Float ordersPrice) {
-        this.ordersPrice = ordersPrice;
-    }
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ORDER_ID", nullable = false)
-    private com.ibm.restaurant.domain.orders.Orders orders;
-
-    public com.ibm.restaurant.domain.orders.Orders getOrders(){
-        return orders;
-    }
-
-    public void setOrders(com.ibm.restaurant.domain.orders.Orders orders){
-        this.orders = orders;
     }
 
     public Long getMenuItemId() {
@@ -72,36 +50,18 @@ public class MenuItems {
         this.menuItemDescription = menuItemDescription;
     }
 
-    public Float getMenuItemPrice() {
+    public BigDecimal getMenuItemPrice() {
         return menuItemPrice;
     }
 
-    public void setMenuItemPrice(Float menuItemPrice) {
+    public void setMenuItemPrice(BigDecimal menuItemPrice) {
         this.menuItemPrice = menuItemPrice;
     }
 
-    @Override
-    public boolean equals(Object menuItemsObject){
-        if(this == menuItemsObject)
-            return true;
-        if(menuItemsObject == null || getClass()!=menuItemsObject.getClass());
-        MenuItems menuItems =(MenuItems) menuItemsObject;
-        return Objects.equals(menuItemId, menuItems.menuItemId);
+    public MenuItems(String itemName, BigDecimal price, String description) {
+        this.menuItemName = itemName;
+        this.menuItemPrice = price;
+        this.menuItemDescription = description;
     }
-
-    @Override
-    public int hashCode(){
-        return Objects.hash(menuItemId);
-    }
-    @Override
-    public String toString(){
-        return "Menu Item{"+
-                ", Menu Item name= "+menuItemName+'\''+
-                ", Menu Item price= "+menuItemPrice+'\''+
-                ", Menu Item description= "+menuItemDescription+'\''+
-                " }";
-    }
-
-
 
 }

@@ -14,6 +14,21 @@ public class Reservation {
     @Column(name = "CLIENT_NAME")
     private String clientName;
 
+    @Column(name = "PERSON_NO")
+    private Integer personNo;
+
+    public void setReservationId(Long reservationId) {
+        this.reservationId = reservationId;
+    }
+
+    public Integer getPersonNo() {
+        return personNo;
+    }
+
+    public void setPersonNo(Integer personNo) {
+        this.personNo = personNo;
+    }
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "TABLE_ID", nullable = false)
     private com.ibm.restaurant.domain.tables.Tables table;

@@ -1,12 +1,12 @@
 package com.ibm.restaurant.menuItems;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.ibm.restaurant.orders.OrdersDTO;
 
-import java.util.Set;
+import java.math.BigDecimal;
+
 
 public class MenuItemsDTO {
-
+//This class is done
     @JsonProperty
     public String menuItemsName;
 
@@ -14,12 +14,11 @@ public class MenuItemsDTO {
     public String menuItemsDescription;
 
     @JsonProperty
-    public Float menuItemsPrice;
+    public BigDecimal menuItemsPrice;
 
     @JsonProperty
     public Long menuItemsId;
 
-    @JsonProperty
-    public Long ordersId;
+
 
 }

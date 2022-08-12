@@ -6,17 +6,16 @@ import java.util.Set;
 
 public interface IMenuItemsRepository {
 
-    MenuItems createMenuItem(MenuItems menuItems);
+    MenuItems createMenuItems(final MenuItems menuItems);
 
-    HashSet<MenuItems> getMenuItemsList();
+    MenuItems getMenuItems(final Long menuItemsId);
 
-    MenuItems getMenuItems(Long menuItemsId);
+    List<MenuItems> getMenuItemsList();
 
-    void updateMenuItems(MenuItems menuItems);
+    MenuItems updateMenuItems(final MenuItems menuItems);
 
-    void deleteMenuItems(MenuItems menuItems);
+    void deleteMenuItems(final MenuItems menuItems);
 
-  // List<MenuItems> findAllByName(String menuItemsName);
-
+    List<MenuItems> findAll(String description, final Integer pageNumber, Integer nrOfItems);
 
 }
