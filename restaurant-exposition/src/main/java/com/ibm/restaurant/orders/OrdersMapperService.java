@@ -2,9 +2,12 @@ package com.ibm.restaurant.orders;
 
 import com.ibm.restaurant.domain.menuItems.IMenuItemsRepository;
 import com.ibm.restaurant.domain.menuItems.MenuItems;
+import com.ibm.restaurant.domain.orders.OrderStatus;
 import com.ibm.restaurant.domain.orders.Orders;
+import com.ibm.restaurant.domain.tables.Tables;
 import com.ibm.restaurant.menuItems.MenuItemsDTO;
 import com.ibm.restaurant.menuItems.MenuItemsMapperService;
+import com.ibm.restaurant.tables.TableDto;
 import com.ibm.restaurant.tables.TableMapperService;
 import org.apache.el.parser.ArithmeticNode;
 import org.aspectj.weaver.ast.Or;
@@ -22,16 +25,31 @@ public class OrdersMapperService {
     @Autowired
     private MenuItemsMapperService menuItemsMapperService;
 
-    public OrdersDTO mapOrdersFromDomain(final Orders orders) {
+    public OrdersDTO mapOrdersFromDomain(Orders orders) {
         OrdersDTO ordersDTO = new OrdersDTO();
-        if(orders != null){
+
             ordersDTO.ordersId = orders.getOrderId();
             ordersDTO.orderStatus = orders.getOrderStatus();
+            ordersDTO.ordersPrice = orders.getMenuItems().stream().mapToDouble(MenuItems::getMenuItemPrice).sum();
             ordersDTO.orderTime = orders.getOrderTime();
             ordersDTO.menuItemsDTO = orders.getMenuItems().stream().map(menuItemsMapperService::mapMenuItemsFromDomain).collect(Collectors.toSet());
             ordersDTO.customerId = orders.getCustomer().getCustomerId();
-        }
-        return ordersDTO;
+            return ordersDTO;
     }
+
+    public HashSet<OrdersDTO> mapOrdersFromDomainList(HashSet<Orders> orders) {
+        HashSet<OrdersDTO> ordersDTOList = new HashSet<>();
+        for (Orders orders1 : orders) {
+            ordersDTOList.add(mapOrdersFromDomain(orders1));
+        }
+        return ordersDTOList;
+    }
+
+    public Orders mapOrdersToDomain(OrdersDTO ordersDTO){
+        Orders orders = new Orders();
+        ordersDTO.menuItemsDTO = orders.getMenuItems().stream().map(menuItemsMapperService::mapMenuItemsFromDomain).collect(Collectors.toSet());
+        return orders;
+    }
+
 
 }

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -31,6 +32,22 @@ public class ReservationController {
     public ResponseEntity<List<ReservationDTO>> findAllByClientName(@PathVariable String clientName) {
         List<ReservationDTO> reservations = service.findAllByClientName(clientName).stream().map(reservationMapperService::mapFromDomain).collect(Collectors.toList());
         return ResponseEntity.ok(reservations);
+    }
+
+    @PutMapping("/{reservationId}")
+    public ResponseEntity<ReservationDTO> updateReservation(@RequestBody ReservationDTO reservationDTO){
+        return Optional.ofNullable(reservationMapperService.mapToDomain(reservationDTO)).map(reservationObj ->{
+            Reservation updReservation = service.updateReservation(reservationObj);
+            ReservationDTO reservation1 = reservationMapperService.mapFromDomain(updReservation);
+            return  ResponseEntity.status(HttpStatus.OK).body(reservation1);
+        }).orElse(null);
+    }
+
+    @GetMapping("/getById/{reservationId}")
+    public ResponseEntity<ReservationDTO> getReservationById(@PathVariable final Long reservationId){
+        Reservation reservation = service.getReservationById(reservationId);
+        ReservationDTO reservationDTO = reservationMapperService.mapFromDomain(reservation);
+        return ResponseEntity.status(HttpStatus.OK).body(reservationDTO);
     }
 
 

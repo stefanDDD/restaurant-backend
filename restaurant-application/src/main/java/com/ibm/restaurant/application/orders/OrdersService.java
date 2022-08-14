@@ -10,6 +10,7 @@ import com.ibm.restaurant.domain.orders.Orders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.Order;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -28,13 +29,14 @@ public class OrdersService {
 
     public Orders createOrders(final Long customerId, List<Long> menuItems){
         Orders orders = new Orders(OrderStatus.IN_PROGRESS);
-       // Customer customer = customerRepository.findById(customerId);
-        //orders.setOrderId(customerId);
+        Customer customer = customerRepository.findById(customerId);
+        orders.setOrderTime(orders.getOrderTime());
+        orders.setCustomer(customer);
         addMenuItemsToOrder(orders, menuItems);
        return iOrdersRepository.createOrder(orders);
     }
 
-    public List<Orders> getOrdersList(){
+    public HashSet<Orders> getOrdersList(){
         return iOrdersRepository.getOrdersList();
     }
 
@@ -48,36 +50,29 @@ public class OrdersService {
         menuItemsFromDb.forEach(item -> orders.addMenuItem(item));
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
     public Orders getOrdersById(Long ordersId){
-        return iOrdersRepository.getOrdersById(ordersId);
-    }
-
-    public Orders getOrdersPrice(Double ordersPrice){
-        return iOrdersRepository.getOrdersPrice(ordersPrice);
+        return iOrdersRepository.getOrderById(ordersId);
     }
 
 
-    public void cancelOrder(Long ordersId, Orders orders) {
-        Orders ordersFromDB = getOrdersById(ordersId);
-        //ordersFromDB.setOrderStatus(orders.getOrderStatus());
-       // ordersFromDB.setOrderStatus((OrderStatus.CANCELED));
-        iOrdersRepository.cancelOrder(ordersFromDB);
+    public Orders updateOrder(Orders orders){
+        Orders ordersFromDB = getOrdersById(orders.getOrderId());
+        if(ordersFromDB != null){
+            ordersFromDB.setMenuItems(orders.getMenuItems());
+            return iOrdersRepository.updateOrder(ordersFromDB);
+        }
+        return null;
+    }
+
+
+    public Orders cancelOrder(Long ordersId, Orders orderStatus1) {
+        orderStatus1.setOrderStatus((OrderStatus.CANCELED));
+        return iOrdersRepository.getOrderById(ordersId);
 
     }
-*/
+
+
+
+
 
 }

@@ -40,4 +40,13 @@ public class CustomerMapperService {
         address.setAddressLine1(addressDto.addressLine1);
         return address;
     }
+
+    public Customer mapToDomainUpdate(CustomerDTO customerDTO){
+        Customer customer = new Customer();
+        Address address = new Address();
+        customer.setName(customerDTO.name);
+        customer.setLastname(customerDTO.lastname);
+        customer.setAddress(address);
+        return customer;
+    }
 }

@@ -14,7 +14,7 @@ public class MenuItemsDTO {
     public String menuItemsDescription;
 
     @JsonProperty
-    public BigDecimal menuItemsPrice;
+    public Double menuItemsPrice;
 
     @JsonProperty
     public Long menuItemsId;

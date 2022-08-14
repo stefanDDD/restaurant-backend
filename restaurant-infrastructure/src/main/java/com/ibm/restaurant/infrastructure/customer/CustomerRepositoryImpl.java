@@ -21,4 +21,9 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     public void save(Customer customer) {
         repositorySdj.save(customer);
     }
+
+    @Override
+    public void updateCustomer(Customer customer){
+        repositorySdj.save(customer);
+    }
 }

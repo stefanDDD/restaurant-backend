@@ -2,6 +2,8 @@ package com.ibm.restaurant.menuItems;
 
 import com.ibm.restaurant.application.menuItems.MenuItemsService;
 import com.ibm.restaurant.domain.menuItems.MenuItems;
+import com.ibm.restaurant.domain.tables.Tables;
+import com.ibm.restaurant.tables.TableDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,13 +38,6 @@ public class MenuItemsController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping
-    public ResponseEntity<List<MenuItemsDTO>> getMenuItemsList(){
-        List<MenuItems> menuItems = menuItemsService.getMenuItemsList();
-        List<MenuItemsDTO> menuItemsDTOS = menuItemsMapperService.mapFromDomainList(menuItems);
-        return ResponseEntity.status(HttpStatus.OK).body(menuItemsDTOS);
-    }
-
     @GetMapping("/{menuItemsId}")
     public ResponseEntity<MenuItemsDTO> getMenuItems(@PathVariable final Long menuItemsId){
         MenuItems menuItems = menuItemsService.getMenuItems(menuItemsId);
@@ -62,16 +57,18 @@ public class MenuItemsController {
 
 
     @DeleteMapping("/{menuItemsId}")
-    public ResponseEntity<Void> deleteMenuItems(final Long menuItemsId){
+    public ResponseEntity<Void> deleteMenuItems(@PathVariable Long menuItemsId){
         menuItemsService.deleteMenuItems(menuItemsId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping("")
-    public ResponseEntity<List<MenuItemsDTO>> findAll(@PathParam("description") final String description, @PathParam("pageNumber") final Integer pageNumber,
-                                                     @PathParam("nrOfItems") final Integer nrOfItems) {
-        List<MenuItems> items = menuItemsService.findAll(description, pageNumber, nrOfItems);
+    public ResponseEntity<List<MenuItemsDTO>> findAll(@PathParam("menuItemDescription") String menuItemDescription, @PathParam("pageNumber") Integer pageNumber,
+                                                     @PathParam("nrOfItems") Integer nrOfItems) {
+        List<MenuItems> items = menuItemsService.findAll(menuItemDescription, pageNumber, nrOfItems);
         return ResponseEntity.status(HttpStatus.OK).body(menuItemsMapperService.mapFromDomainListFindAll(items));
     }
+
+
 
 }

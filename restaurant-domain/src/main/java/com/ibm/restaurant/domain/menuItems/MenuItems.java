@@ -20,7 +20,7 @@ public class MenuItems {
     private String menuItemDescription;
 
     @Column(name = "PRICE")
-    private BigDecimal menuItemPrice;
+    private Double menuItemPrice;
 
     public MenuItems(){
 
@@ -50,18 +50,18 @@ public class MenuItems {
         this.menuItemDescription = menuItemDescription;
     }
 
-    public BigDecimal getMenuItemPrice() {
+    public Double getMenuItemPrice() {
         return menuItemPrice;
     }
 
-    public void setMenuItemPrice(BigDecimal menuItemPrice) {
+    public void setMenuItemPrice(Double menuItemPrice) {
         this.menuItemPrice = menuItemPrice;
     }
 
-    public MenuItems(String itemName, BigDecimal price, String description) {
-        this.menuItemName = itemName;
-        this.menuItemPrice = price;
-        this.menuItemDescription = description;
+    public MenuItems(String menuItemName, Double menuItemPrice, String menuItemDescription) {
+        this.menuItemName = menuItemName;
+        this.menuItemPrice = menuItemPrice;
+        this.menuItemDescription = menuItemDescription;
     }
 
 }

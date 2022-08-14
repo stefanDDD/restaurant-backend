@@ -3,16 +3,14 @@ package com.ibm.restaurant.infrastructure.menuItems;
 import com.ibm.restaurant.domain.menuItems.IMenuItemsRepository;
 import com.ibm.restaurant.domain.menuItems.MenuItems;
 import com.ibm.restaurant.domain.orders.Orders;
+import com.ibm.restaurant.domain.tables.Tables;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Repository
 public class MenuItemsRepositoryImpl implements IMenuItemsRepository {
@@ -20,17 +18,10 @@ public class MenuItemsRepositoryImpl implements IMenuItemsRepository {
     @Autowired
     private IMenuItemsRepositorySdj iMenuItemsRepositorySdj;
 
-
     @Override
     public MenuItems createMenuItems(MenuItems menuItems) {
         return iMenuItemsRepositorySdj.save(menuItems);
     }
-
-    @Override
-    public List<MenuItems> getMenuItemsList(){
-        return iMenuItemsRepositorySdj.findAll();
-    }
-
 
     @Override
     public MenuItems getMenuItems(Long menuItemsId){
@@ -48,20 +39,22 @@ public class MenuItemsRepositoryImpl implements IMenuItemsRepository {
 
 
     @Override
-    public List<MenuItems> findAll(String description, Integer pageNumber, Integer nrOfItems) {
+    public List<MenuItems> findAll(String menuItemDescription, Integer pageNumber, Integer nrOfItems) {
         Pageable request = PageRequest.of(pageNumber, nrOfItems);
 
-        if (StringUtils.isEmpty(description)) {
+        if (StringUtils.isEmpty(menuItemDescription)) {
             return Optional.ofNullable(iMenuItemsRepositorySdj.findAll(request)).map(result -> result.getContent()).orElse(Collections.emptyList());
         } else {
-            List<MenuItems> filteredByName = iMenuItemsRepositorySdj.findByItemNameContainingIgnoreCase(description, request);
+            List<MenuItems> filteredByName = iMenuItemsRepositorySdj.findByMenuItemNameContainingIgnoreCase(menuItemDescription, request);
 
             if (!filteredByName.isEmpty()) {
                 return filteredByName;
             } else {
-                return iMenuItemsRepositorySdj.findByDescriptionContainingIgnoreCase(description, request);
+                return iMenuItemsRepositorySdj.findByMenuItemDescriptionContainingIgnoreCase(menuItemDescription, request);
             }
         }
     }
+
+
 
 }

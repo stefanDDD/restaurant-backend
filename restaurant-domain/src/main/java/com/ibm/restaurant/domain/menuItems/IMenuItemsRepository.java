@@ -10,12 +10,10 @@ public interface IMenuItemsRepository {
 
     MenuItems getMenuItems(final Long menuItemsId);
 
-    List<MenuItems> getMenuItemsList();
-
     MenuItems updateMenuItems(final MenuItems menuItems);
 
-    void deleteMenuItems(final MenuItems menuItems);
+    void deleteMenuItems(MenuItems menuItems);
 
-    List<MenuItems> findAll(String description, final Integer pageNumber, Integer nrOfItems);
+    List<MenuItems> findAll(String menuItemDescription, Integer pageNumber, Integer nrOfItems);
 
 }

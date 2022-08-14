@@ -23,6 +23,15 @@ public class ReservationRepositoryImpl implements IReservationRepository {
         return repositorySdj.findAllByClientNameContains(clientName);
     }
 
+    @Override
+    public Reservation updateReservation(Reservation reservation){
+        return repositorySdj.save(reservation);
+    }
+
+    @Override
+    public Reservation getReservationById(Long reservationId){
+        return repositorySdj.findById(reservationId).orElse(null);
+    }
 
 }
 

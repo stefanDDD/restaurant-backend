@@ -5,12 +5,16 @@ package com.ibm.restaurant.domain.orders;
 import com.ibm.restaurant.domain.menuItems.MenuItems;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.*;
 
 @Entity
 @Table(name = "ONLINE_ORDERS")
 public class Orders {
 
+    public Orders(){
+
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ORDER_ID")
@@ -26,6 +30,17 @@ public class Orders {
     private String orderTime;
     @Column(name = "DELIVERY_STATUS")
     public OrderStatus orderStatus;
+
+    public Double orderPrice;
+
+    public Double getOrderPrice() {
+
+        return orderPrice;
+    }
+
+    public void setOrderPrice(Double orderPrice) {
+        this.orderPrice = orderPrice;
+    }
 
     public OrderStatus getOrderStatus() {
         return orderStatus;
@@ -52,7 +67,6 @@ public class Orders {
             joinColumns = @JoinColumn(name = "ORDER_ID"),
             inverseJoinColumns = @JoinColumn(name = "MENU_ITEM_ID"))
     private Set<MenuItems> menuItems = new HashSet<>();
-
 
     public void addMenuItem(MenuItems menuItems) {
         this.menuItems.add(menuItems);
@@ -92,7 +106,7 @@ public class Orders {
         return customer;
     }
 
-    public void seCustomer(com.ibm.restaurant.domain.customer.Customer customer) {
+    public void setCustomer(com.ibm.restaurant.domain.customer.Customer customer) {
         this.customer = customer;
     }
 

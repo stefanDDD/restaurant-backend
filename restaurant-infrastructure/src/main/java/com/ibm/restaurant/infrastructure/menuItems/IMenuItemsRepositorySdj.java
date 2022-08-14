@@ -9,8 +9,7 @@ import java.util.List;
 
 public interface IMenuItemsRepositorySdj extends JpaRepository<MenuItems, Long> {
 
-    List<MenuItems> findByItemNameContainingIgnoreCase(String itemName, Pageable page);
-
-    List<MenuItems> findByDescriptionContainingIgnoreCase(String description, Pageable page);
+    List<MenuItems> findByMenuItemNameContainingIgnoreCase(String menuItemName, Pageable page);
+    List<MenuItems> findByMenuItemDescriptionContainingIgnoreCase(String menuItemDescription, Pageable page);
 
 }

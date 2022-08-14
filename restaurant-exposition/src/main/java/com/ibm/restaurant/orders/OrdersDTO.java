@@ -24,5 +24,8 @@ public class OrdersDTO {
     @JsonProperty
     public Set<MenuItemsDTO> menuItemsDTO;
 
+    @JsonProperty
+    public Double ordersPrice;
+
 
 }

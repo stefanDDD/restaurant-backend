@@ -2,6 +2,7 @@ package com.ibm.restaurant.application.menuItems;
 
 import com.ibm.restaurant.domain.menuItems.IMenuItemsRepository;
 import com.ibm.restaurant.domain.menuItems.MenuItems;
+import com.ibm.restaurant.domain.tables.Tables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +20,11 @@ public class MenuItemsService {
     public MenuItems createMenuItems(MenuItems menuItems) throws Exception {
         return Optional.ofNullable(iMenuItemsRepository.createMenuItems(menuItems)).orElseThrow(() -> new Exception("Unable to create menu item"));
     }
-    public List<MenuItems> getMenuItemsList(){
-        return iMenuItemsRepository.getMenuItemsList();
-    }
-
     public MenuItems getMenuItems(Long menuItemsId) {
         return iMenuItemsRepository.getMenuItems(menuItemsId);
     }
+
+
 
     public MenuItems updateMenuItems(MenuItems menuItems) {
         MenuItems menuItemsFromDB = getMenuItems(menuItems.getMenuItemId());
@@ -39,14 +38,12 @@ public class MenuItemsService {
         return null;
     }
 
-
     public void deleteMenuItems(Long menuItemsId) {
-
-        MenuItems menuItemsFromDB = iMenuItemsRepository.getMenuItems(menuItemsId);
+        MenuItems menuItemsFromDB = getMenuItems(menuItemsId);
         iMenuItemsRepository.deleteMenuItems(menuItemsFromDB);
     }
 
-    public List<MenuItems> findAll(String description, Integer pageNumber, Integer nrOfItems) {
+    public List<MenuItems> findAll(String menuItemDescription, Integer pageNumber, Integer nrOfItems) {
         if(pageNumber == null) {
             pageNumber = 0;
         }
@@ -55,6 +52,8 @@ public class MenuItemsService {
             nrOfItems = 10;
         }
 
-        return iMenuItemsRepository.findAll(description, pageNumber, nrOfItems);
+        return iMenuItemsRepository.findAll(menuItemDescription, pageNumber, nrOfItems);
     }
+
+
 }

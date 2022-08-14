@@ -8,4 +8,8 @@ public interface IReservationRepository {
 
     List<Reservation> findAllByClientName(String clientName);
 
+    Reservation updateReservation(final Reservation reservation);
+
+    Reservation getReservationById(final Long reservationId);
+
 }

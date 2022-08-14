@@ -29,4 +29,11 @@ public class CustomerController {
         customerService.createCustomer(customer);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @PutMapping("/{customerId}")
+    public ResponseEntity<Void> updateCustomer(@PathVariable Long customerId, @RequestBody CustomerDTO customerDTO){
+        Customer customer = customerMapperService.mapToDomainUpdate(customerDTO);
+        customerService.updateCustomer(customerId, customer);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }

@@ -6,4 +6,6 @@ public interface CustomerRepository {
 
     Customer findById(Long id);
 
+    void updateCustomer(Customer customer);
+
 }

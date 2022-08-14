@@ -1,5 +1,6 @@
 package com.ibm.restaurant.infrastructure.orders;
 
+import com.ibm.restaurant.domain.menuItems.MenuItems;
 import com.ibm.restaurant.domain.orders.IOrdersRepository;
 import com.ibm.restaurant.domain.orders.Orders;
 import com.ibm.restaurant.domain.reservations.Reservation;
@@ -25,20 +26,26 @@ public class OrdersRepositoryImpl implements IOrdersRepository {
     }
 
     @Override
-    public List<Orders> getOrdersList() {
-        return iOrdersRepositorySdj.findAll();
+    public HashSet<Orders> getOrdersList() {
+        return new HashSet<>(iOrdersRepositorySdj.findAll());
     }
 
+
     @Override
-    public Orders cancelOrder(Orders orders) {
+    public Orders updateOrder(Orders orders) {
 
         return iOrdersRepositorySdj.save(orders);
     }
 
     @Override
-    public Orders updateOrders(Orders orders) {
+    public Orders cancelOrder(Long ordersId, Order orderStatus) {
+        List<Orders> orders = new ArrayList<>();
+        return null;
+    }
 
-        return iOrdersRepositorySdj.save(orders);
+    @Override
+    public Orders getOrderById(Long ordersId){
+        return iOrdersRepositorySdj.findById(ordersId).orElseThrow(null);
     }
 
 

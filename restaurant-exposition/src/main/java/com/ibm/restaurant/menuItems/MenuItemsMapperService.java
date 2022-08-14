@@ -31,20 +31,9 @@ public class MenuItemsMapperService {
         return null;
     }
 
-
-    public List<MenuItemsDTO> mapFromDomainList(List<MenuItems> menuItems) {
-        List<MenuItemsDTO> listAux = new ArrayList<>();
-        for (MenuItems menuItems1 : menuItems) {
-            listAux.add(mapMenuItemsFromDomain(menuItems1));
-
-        }
-        return listAux;
-    }
-
     public List<MenuItemsDTO> mapFromDomainListFindAll(final List<MenuItems> input) {
         if (input != null && !input.isEmpty()) {
-            return input.stream()
-                    .map(item -> mapMenuItemsFromDomain(item)).collect(Collectors.toList());
+            return input.stream().map(item -> mapMenuItemsFromDomain(item)).collect(Collectors.toList());
         }
         return Collections.emptyList();
     }

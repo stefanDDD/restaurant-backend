@@ -151,7 +151,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/v1/tables",
+							"raw": "http://localhost:8080/api/v1/tables/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -160,7 +160,8 @@
 							"path": [
 								"api",
 								"v1",
-								"tables"
+								"tables",
+								""
 							]
 						}
 					},
@@ -246,7 +247,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"menuItemsName\":\"Pizza Classic L\",\r\n    \"menuItemsPrice\":47.75,\r\n    \"menuItemsDescription\":\"ham, cheese, olives, mushrooms\",\r\n    \"ordersId\":1\r\n}",
+							"raw": "{\r\n    \"menuItemsName\":\"Pizza Classic L\",\r\n    \"menuItemsPrice\":47.75,\r\n    \"menuItemsDescription\":\"ham, cheese, olives, mushrooms\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -282,14 +283,15 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/menu-items",
+							"raw": "http://localhost:8080/menu-items/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"menu-items"
+								"menu-items",
+								""
 							]
 						}
 					},
@@ -333,7 +335,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/menu-items",
+							"raw": "http://localhost:8080/menu-items?menuItemDescriptionAndName=cheese",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -341,6 +343,17 @@
 							"port": "8080",
 							"path": [
 								"menu-items"
+							],
+							"query": [
+								{
+									"key": "menuItemDescriptionAndName",
+									"value": "cheese"
+								},
+								{
+									"key": "nrOfItems",
+									"value": "1",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -365,32 +378,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "getMenuItemsByName",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/menu-items/?menuItemsName=",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"menu-items",
-								""
-							],
-							"query": [
-								{
-									"key": "menuItemsName",
-									"value": "Pizza"
-								}
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
@@ -404,7 +391,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"clientName\":\"Stelea Andrei2\",\r\n    \"tableId\":1\r\n}",
+							"raw": "{\r\n    \"clientName\":\"Stelea Andrei2\",\r\n    \"tableId\":1,\r\n    \"personNo\":2\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -433,13 +420,15 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/reservations/1",
+							"raw": "http://localhost:8080/api/v1/reservations/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
+								"api",
+								"v1",
 								"reservations",
 								"1"
 							]
@@ -453,21 +442,40 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/reservations/?clientName=Stelea Andrei",
+							"raw": "http://localhost:8080/api/v1/reservations/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
+								"api",
+								"v1",
 								"reservations",
 								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getReservationById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/reservations/getById/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
 							],
-							"query": [
-								{
-									"key": "clientName",
-									"value": "Stelea Andrei"
-								}
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"reservations",
+								"getById",
+								"1"
 							]
 						}
 					},
@@ -488,14 +496,17 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/reservations",
+							"raw": "http://localhost:8080/api/v1/reservations/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"reservations"
+								"api",
+								"v1",
+								"reservations",
+								"1"
 							]
 						}
 					},
@@ -516,7 +527,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"clientName\":\"Stelea Andrei\",\r\n    \"tableId\":4\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -524,7 +535,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/v1/orders/1",
+							"raw": "http://localhost:8080/api/v1/orders/byId/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -534,6 +545,7 @@
 								"api",
 								"v1",
 								"orders",
+								"byId",
 								"1"
 							]
 						}
@@ -615,7 +627,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"menuItemsId\" :1,\r\n    \"orderTime\" : null,\r\n    \"orderStatus\" : null,\r\n    \"ordersList\": []\r\n}",
+							"raw": "{\r\n    \"customerId\" : 1,\r\n    \"menuItems\" : [ \n        1\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -633,6 +645,37 @@
 								"api",
 								"v1",
 								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateOrder",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"menuItems\" : [ \n        1\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/orders/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								""
 							]
 						}
 					},
@@ -690,6 +733,37 @@
 								"api",
 								"v1",
 								"customer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateCustomer",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Stelea \",\n    \"lastname\": \"Andrei\",\n    \"addressDto\" : {\n        \"addressLine1\" : \"addressLine1\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/customer/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"customer",
+								""
 							]
 						}
 					},
