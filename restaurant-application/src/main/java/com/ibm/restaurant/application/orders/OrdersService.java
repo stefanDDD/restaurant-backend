@@ -2,6 +2,7 @@ package com.ibm.restaurant.application.orders;
 
 import com.ibm.restaurant.domain.customer.Customer;
 import com.ibm.restaurant.domain.customer.CustomerRepository;
+import com.ibm.restaurant.domain.exception.BusinessException;
 import com.ibm.restaurant.domain.menuItems.IMenuItemsRepository;
 import com.ibm.restaurant.domain.menuItems.MenuItems;
 import com.ibm.restaurant.domain.orders.IOrdersRepository;
@@ -14,6 +15,8 @@ import javax.persistence.criteria.Order;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 
 
 @Service
@@ -27,11 +30,12 @@ public class OrdersService {
     private CustomerRepository customerRepository;
 
 
-    public Orders createOrders(final Long customerId, List<Long> menuItems){
+    public Orders createOrders(Long customerId, List<Long> menuItems){
         Orders orders = new Orders(OrderStatus.IN_PROGRESS);
         Customer customer = customerRepository.findById(customerId);
+        orders.setCustomerId(customer);
         orders.setOrderTime(orders.getOrderTime());
-        orders.setCustomer(customer);
+        orders.setOrderStatus(OrderStatus.IN_PROGRESS);
         addMenuItemsToOrder(orders, menuItems);
        return iOrdersRepository.createOrder(orders);
     }
@@ -50,25 +54,73 @@ public class OrdersService {
         menuItemsFromDb.forEach(item -> orders.addMenuItem(item));
     }
 
+    private Set<MenuItems> updateMenuItemsToOrder(Orders orders, Set<Long> menuItems) {
+        Set<MenuItems> menuItemsFromDb = new HashSet<>();
+
+        for(Long item : menuItems) {
+            MenuItems menu = iMenuItemsRepository.getMenuItems(item);
+            menuItemsFromDb.add(menu);
+        }
+        menuItemsFromDb.forEach(item -> orders.addMenuItem(item));
+        return menuItemsFromDb;
+    }
+
+
     public Orders getOrdersById(Long ordersId){
         return iOrdersRepository.getOrderById(ordersId);
     }
 
 
-    public Orders updateOrder(Orders orders){
-        Orders ordersFromDB = getOrdersById(orders.getOrderId());
-        if(ordersFromDB != null){
-            ordersFromDB.setMenuItems(orders.getMenuItems());
-            return iOrdersRepository.updateOrder(ordersFromDB);
-        }
-        return null;
+    public void updateOrder(Long orderId, Orders orders) {
+        Set<Long> menuItems = new HashSet<>();
+        Orders ordersFromDB = getOrdersById(orderId);
+        orders.setMenuItems(updateMenuItemsToOrder(orders, menuItems));
+        iOrdersRepository.updateOrder(ordersFromDB);
     }
 
 
-    public Orders cancelOrder(Long ordersId, Orders orderStatus1) {
-        orderStatus1.setOrderStatus((OrderStatus.CANCELED));
-        return iOrdersRepository.getOrderById(ordersId);
+    public void cancelOrder(Long ordersId, Orders orders) {
+        Orders ordersFromDB = getOrdersById(ordersId);
+        if(ordersFromDB.orderStatus.equals(OrderStatus.IN_PROGRESS)) {
+            ordersFromDB.setOrderStatus(OrderStatus.CANCELED);
+            iOrdersRepository.cancelOrder(ordersFromDB);
+        }
+       else if(ordersFromDB.orderStatus.equals(OrderStatus.IN_DELIVERY)) {
+            String message = "The order is in delivery and cannot be canceled!";
+            String code = "BAD_REQUEST";
+            throw new BusinessException(message,code);
+        }
+        else if(ordersFromDB.orderStatus.equals(OrderStatus.DELIVERED)){
+            String message = "The order was delivered and cannot be canceled!";
+            String code = "BAD_REQUEST";
+            throw new BusinessException(message,code);
+        }
+        else if(ordersFromDB.orderStatus.equals(OrderStatus.CANCELED)){
+            String message = "The order is already canceled!";
+            String code = "BAD_REQUEST";
+            throw new BusinessException(message,code);
+        }
 
+    }
+
+    public void readyToBeDeliveredOrder(Long ordersId, Orders orders) {
+        Orders ordersFromDB = getOrdersById(ordersId);
+        if(ordersFromDB.orderStatus.equals(OrderStatus.DELIVERED)){
+            String message = "The order is already delivered!";
+            String code = "BAD_REQUEST";
+            throw new BusinessException(message,code);
+        }
+        else if(!ordersFromDB.orderStatus.equals(OrderStatus.IN_DELIVERY)){
+            ordersFromDB.setOrderStatus(OrderStatus.IN_DELIVERY);
+            iOrdersRepository.readyToBeDeliveredOrder(ordersFromDB);
+        }
+
+    }
+
+    public void deliveredOrder(Long ordersId, Orders orders) {
+        Orders ordersFromDB = getOrdersById(ordersId);
+        ordersFromDB.setOrderStatus(OrderStatus.DELIVERED);
+        iOrdersRepository.deliveredOrder(ordersFromDB);
     }
 
 

@@ -1,6 +1,7 @@
 package com.ibm.restaurant.customer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ibm.restaurant.domain.customer.Address;
 
 public class CustomerDTO {
 

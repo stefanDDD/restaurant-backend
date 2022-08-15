@@ -3,8 +3,7 @@ public interface CustomerRepository {
 
     void save(Customer customer);
 
-
-    Customer findById(Long id);
+    Customer findById(Long customerId);
 
     void updateCustomer(Customer customer);
 

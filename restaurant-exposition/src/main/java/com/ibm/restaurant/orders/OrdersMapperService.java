@@ -25,15 +25,16 @@ public class OrdersMapperService {
     @Autowired
     private MenuItemsMapperService menuItemsMapperService;
 
+
+
     public OrdersDTO mapOrdersFromDomain(Orders orders) {
         OrdersDTO ordersDTO = new OrdersDTO();
-
             ordersDTO.ordersId = orders.getOrderId();
             ordersDTO.orderStatus = orders.getOrderStatus();
             ordersDTO.ordersPrice = orders.getMenuItems().stream().mapToDouble(MenuItems::getMenuItemPrice).sum();
             ordersDTO.orderTime = orders.getOrderTime();
             ordersDTO.menuItemsDTO = orders.getMenuItems().stream().map(menuItemsMapperService::mapMenuItemsFromDomain).collect(Collectors.toSet());
-            ordersDTO.customerId = orders.getCustomer().getCustomerId();
+            ordersDTO.customerId = orders.getCustomerId().getCustomerId();
             return ordersDTO;
     }
 
@@ -50,6 +51,41 @@ public class OrdersMapperService {
         ordersDTO.menuItemsDTO = orders.getMenuItems().stream().map(menuItemsMapperService::mapMenuItemsFromDomain).collect(Collectors.toSet());
         return orders;
     }
+
+    public OrdersDTO mapOrdersToDomainGet(Orders orders){
+        if (orders != null) {
+
+            OrdersDTO ordersDTO = new OrdersDTO();
+            ordersDTO.ordersId = orders.getOrderId();
+            ordersDTO.orderTime = orders.getOrderTime();
+            ordersDTO.ordersPrice = orders.getMenuItems().stream().mapToDouble(MenuItems::getMenuItemPrice).sum();
+            ordersDTO.orderStatus = orders.getOrderStatus();
+            ordersDTO.menuItemsDTO = orders.getMenuItems().stream().map(menuItemsMapperService::mapMenuItemsFromDomain).collect(Collectors.toSet());
+            ordersDTO.customerId = orders.getCustomerId().getCustomerId();
+            return ordersDTO;
+        }
+        return null;
+    }
+
+    public Orders mapOrderToDomainCancel(OrdersDTO ordersDTO){
+        Orders orders = new Orders();
+        orders.setOrderStatus(OrderStatus.CANCELED);
+        return orders;
+    }
+
+    public Orders mapOrderToDomainDelivery(OrdersDTO ordersDTO){
+        Orders orders = new Orders();
+        orders.setOrderStatus(OrderStatus.IN_DELIVERY);
+        return orders;
+    }
+
+    public Orders mapOrderToDomainDelivered(OrdersDTO ordersDTO){
+        Orders orders = new Orders();
+        orders.setOrderStatus(OrderStatus.DELIVERED);
+        return orders;
+    }
+
+
 
 
 }

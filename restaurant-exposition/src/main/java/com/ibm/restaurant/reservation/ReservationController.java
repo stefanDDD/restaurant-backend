@@ -35,7 +35,7 @@ public class ReservationController {
     }
 
     @PutMapping("/{reservationId}")
-    public ResponseEntity<ReservationDTO> updateReservation(@RequestBody ReservationDTO reservationDTO){
+    public ResponseEntity<ReservationDTO> updateReservation(@PathVariable("reservationId") Long reservationId, @RequestBody ReservationDTO reservationDTO){
         return Optional.ofNullable(reservationMapperService.mapToDomain(reservationDTO)).map(reservationObj ->{
             Reservation updReservation = service.updateReservation(reservationObj);
             ReservationDTO reservation1 = reservationMapperService.mapFromDomain(updReservation);

@@ -2,6 +2,7 @@ package com.ibm.restaurant.domain.orders;
 
 
 
+import com.ibm.restaurant.domain.customer.Customer;
 import com.ibm.restaurant.domain.menuItems.MenuItems;
 
 import javax.persistence.*;
@@ -19,8 +20,6 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ORDER_ID")
     private Long orderId;
-    @Column(name = "CUSTOMER_ID")
-    private String orderClient;
 
     public Orders(OrderStatus orderStatus) {
         this.orderStatus = orderStatus;
@@ -29,9 +28,12 @@ public class Orders {
     @Column(name = "ORDER_DATE")
     private String orderTime;
     @Column(name = "DELIVERY_STATUS")
+    @Enumerated(value = EnumType.STRING)
     public OrderStatus orderStatus;
 
+
     public Double orderPrice;
+
 
     public Double getOrderPrice() {
 
@@ -58,9 +60,9 @@ public class Orders {
         this.menuItems = menuItems;
     }
 
-    @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true)
-    @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "CUSTOMER_ID", updatable = false, insertable = false)
-    private com.ibm.restaurant.domain.customer.Customer customer;
+    @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "CUSTOMER_ID")
+    private com.ibm.restaurant.domain.customer.Customer customerId;
     @ManyToMany
     @JoinTable(
             name = "ONLINE_ORDERS_MENU_ITEMS",
@@ -84,13 +86,7 @@ public class Orders {
         this.orderId = orderId;
     }
 
-    public String getOrderClient() {
-        return orderClient;
-    }
 
-    public void setOrderClient(String orderClient) {
-        this.orderClient = orderClient;
-    }
 
     public String getOrderTime() {
         return orderTime;
@@ -102,12 +98,12 @@ public class Orders {
         this.orderTime = orderTime;
     }
 
-    public com.ibm.restaurant.domain.customer.Customer getCustomer(){
-        return customer;
+    public com.ibm.restaurant.domain.customer.Customer getCustomerId(){
+        return customerId;
     }
 
-    public void setCustomer(com.ibm.restaurant.domain.customer.Customer customer) {
-        this.customer = customer;
+    public void setCustomerId(com.ibm.restaurant.domain.customer.Customer customerId) {
+        this.customerId = customerId;
     }
 
 }

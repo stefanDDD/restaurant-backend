@@ -1,6 +1,7 @@
 package com.ibm.restaurant.orders;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ibm.restaurant.domain.menuItems.MenuItems;
 import com.ibm.restaurant.domain.orders.OrderStatus;
 import com.ibm.restaurant.domain.orders.Orders;
 import com.ibm.restaurant.menuItems.MenuItemsDTO;
@@ -26,6 +27,7 @@ public class OrdersDTO {
 
     @JsonProperty
     public Double ordersPrice;
+
 
 
 }

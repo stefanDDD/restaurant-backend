@@ -6,6 +6,13 @@ import javax.persistence.*;
 @Table(name = "CUSTOMERS")
 public class Customer {
 
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
+    }
+    public Customer(){
+
+    }
+
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CUSTOMER_ID")
@@ -48,5 +55,6 @@ public class Customer {
     public void setAddress(Address address) {
         this.address = address;
     }
+
 
 }

@@ -9,15 +9,19 @@ import java.util.List;
 
 public interface IOrdersRepository {
 
-    Orders createOrder(final Orders orders);
+    Orders createOrder(Orders orders);
 
-    Orders updateOrder(final Orders orders);
+    void updateOrder(Orders orders);
 
-    Orders cancelOrder(Long ordersId, Order orderStatus);
+    void cancelOrder(Orders orders);
+
+    void readyToBeDeliveredOrder(Orders orders);
+
+    void deliveredOrder(Orders orders);
 
     HashSet<Orders> getOrdersList();
 
-    Orders getOrderById(final Long ordersId);
+    Orders getOrderById(Long ordersId);
 
 
 

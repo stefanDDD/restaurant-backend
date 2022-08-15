@@ -1,18 +1,11 @@
 package com.ibm.restaurant.infrastructure.orders;
 
-import com.ibm.restaurant.domain.menuItems.MenuItems;
 import com.ibm.restaurant.domain.orders.IOrdersRepository;
 import com.ibm.restaurant.domain.orders.Orders;
-import com.ibm.restaurant.domain.reservations.Reservation;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.criteria.Order;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Repository
 public class OrdersRepositoryImpl implements IOrdersRepository {
@@ -27,21 +20,35 @@ public class OrdersRepositoryImpl implements IOrdersRepository {
 
     @Override
     public HashSet<Orders> getOrdersList() {
-        return new HashSet<>(iOrdersRepositorySdj.findAll());
+        return new HashSet<>((Collection) iOrdersRepositorySdj.findAll());
     }
 
 
     @Override
-    public Orders updateOrder(Orders orders) {
+    public void updateOrder(Orders orders) {
 
-        return iOrdersRepositorySdj.save(orders);
+         iOrdersRepositorySdj.save(orders);
+    }
+
+
+    @Override
+    public void cancelOrder(Orders orders) {
+        iOrdersRepositorySdj.save(orders);
+
     }
 
     @Override
-    public Orders cancelOrder(Long ordersId, Order orderStatus) {
-        List<Orders> orders = new ArrayList<>();
-        return null;
+    public void readyToBeDeliveredOrder(Orders orders) {
+        iOrdersRepositorySdj.save(orders);
+
     }
+
+    @Override
+    public void deliveredOrder(Orders orders) {
+        iOrdersRepositorySdj.save(orders);
+
+    }
+
 
     @Override
     public Orders getOrderById(Long ordersId){
