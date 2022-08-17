@@ -1,16 +1,10 @@
 package com.ibm.restaurant.orders;
 
-import com.ibm.restaurant.domain.menuItems.IMenuItemsRepository;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.ibm.restaurant.domain.menuItems.MenuItems;
 import com.ibm.restaurant.domain.orders.OrderStatus;
 import com.ibm.restaurant.domain.orders.Orders;
-import com.ibm.restaurant.domain.tables.Tables;
-import com.ibm.restaurant.menuItems.MenuItemsDTO;
 import com.ibm.restaurant.menuItems.MenuItemsMapperService;
-import com.ibm.restaurant.tables.TableDto;
-import com.ibm.restaurant.tables.TableMapperService;
-import org.apache.el.parser.ArithmeticNode;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,14 +22,15 @@ public class OrdersMapperService {
 
 
     public OrdersDTO mapOrdersFromDomain(Orders orders) {
+        List<OrdersDTO> ordersDTO1 = new ArrayList<>();
         OrdersDTO ordersDTO = new OrdersDTO();
-            ordersDTO.ordersId = orders.getOrderId();
-            ordersDTO.orderStatus = orders.getOrderStatus();
-            ordersDTO.ordersPrice = orders.getMenuItems().stream().mapToDouble(MenuItems::getMenuItemPrice).sum();
-            ordersDTO.orderTime = orders.getOrderTime();
-            ordersDTO.menuItemsDTO = orders.getMenuItems().stream().map(menuItemsMapperService::mapMenuItemsFromDomain).collect(Collectors.toSet());
-            ordersDTO.customerId = orders.getCustomerId().getCustomerId();
-            return ordersDTO;
+        ordersDTO.ordersId = orders.getOrderId();
+        ordersDTO.orderStatus = orders.getOrderStatus();
+        ordersDTO.ordersPrice = orders.getMenuItems().stream().mapToDouble(MenuItems::getMenuItemPrice).sum();
+        ordersDTO.orderTime = orders.getOrderTime();
+        ordersDTO.menuItemsDTO = orders.getMenuItems().stream().map(menuItemsMapperService::mapMenuItemsFromDomain).collect(Collectors.toList());
+        ordersDTO.customerId = orders.getCustomerId().getCustomerId();
+        return ordersDTO;
     }
 
     public HashSet<OrdersDTO> mapOrdersFromDomainList(HashSet<Orders> orders) {
@@ -48,7 +43,7 @@ public class OrdersMapperService {
 
     public Orders mapOrdersToDomain(OrdersDTO ordersDTO){
         Orders orders = new Orders();
-        ordersDTO.menuItemsDTO = orders.getMenuItems().stream().map(menuItemsMapperService::mapMenuItemsFromDomain).collect(Collectors.toSet());
+        ordersDTO.menuItemsDTO = orders.getMenuItems().stream().map(menuItemsMapperService::mapMenuItemsFromDomain).collect(Collectors.toList());
         return orders;
     }
 
@@ -60,7 +55,7 @@ public class OrdersMapperService {
             ordersDTO.orderTime = orders.getOrderTime();
             ordersDTO.ordersPrice = orders.getMenuItems().stream().mapToDouble(MenuItems::getMenuItemPrice).sum();
             ordersDTO.orderStatus = orders.getOrderStatus();
-            ordersDTO.menuItemsDTO = orders.getMenuItems().stream().map(menuItemsMapperService::mapMenuItemsFromDomain).collect(Collectors.toSet());
+            ordersDTO.menuItemsDTO = orders.getMenuItems().stream().map(menuItemsMapperService::mapMenuItemsFromDomain).collect(Collectors.toList());
             ordersDTO.customerId = orders.getCustomerId().getCustomerId();
             return ordersDTO;
         }
@@ -83,6 +78,17 @@ public class OrdersMapperService {
         Orders orders = new Orders();
         orders.setOrderStatus(OrderStatus.DELIVERED);
         return orders;
+    }
+
+    public OrdersDTO mapOrdersToDomainPrice(Orders orders){
+        if (orders != null) {
+            OrdersDTO ordersDTO = new OrdersDTO();
+            ordersDTO.ordersPrice = orders.getMenuItems().stream().mapToDouble(MenuItems::getMenuItemPrice).sum();
+            ordersDTO.customerId = orders.getCustomerId().getCustomerId();
+            ordersDTO.ordersId = orders.getOrderId();
+            return ordersDTO;
+        }
+        return null;
     }
 
 

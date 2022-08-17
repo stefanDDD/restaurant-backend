@@ -19,14 +19,14 @@ public class Customer {
     private Long customerId;
 
     @Column(name = "NAME")
-    private String name;
+    public String name;
 
     @Column(name = "LAST_NAME")
-    private String lastname;
+    public String lastname;
 
     @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true, cascade=CascadeType.ALL )
     @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "CUSTOMER_ID")
-    private Address address;
+    public Address address;
 
     public Address getAddress() {
         return address;

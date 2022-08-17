@@ -1,5 +1,6 @@
 package com.ibm.restaurant.orders;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.ibm.restaurant.application.orders.OrdersService;
 import com.ibm.restaurant.domain.menuItems.MenuItems;
 import com.ibm.restaurant.domain.orders.OrderStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.criteria.Order;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -89,14 +91,12 @@ public class OrdersController {
     }
 
 
+    @GetMapping("/getPrice/{orderPriceID}")
+    public ResponseEntity<OrdersDTO> getOrderPrice(@PathVariable final Long orderPriceID){
+        Orders orders = ordersService.getOrderPrice(orderPriceID);
+        return ResponseEntity.status(HttpStatus.OK).body(ordersMapperService.mapOrdersToDomainPrice(orders));
 
-
-
-
-
-
-
-
+    }
 
 
 }

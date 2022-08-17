@@ -1,8 +1,10 @@
 package com.ibm.restaurant.application.orders;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.ibm.restaurant.domain.customer.Customer;
 import com.ibm.restaurant.domain.customer.CustomerRepository;
 import com.ibm.restaurant.domain.exception.BusinessException;
+import com.ibm.restaurant.domain.exception.NotFoundException;
 import com.ibm.restaurant.domain.menuItems.IMenuItemsRepository;
 import com.ibm.restaurant.domain.menuItems.MenuItems;
 import com.ibm.restaurant.domain.orders.IOrdersRepository;
@@ -33,11 +35,24 @@ public class OrdersService {
     public Orders createOrders(Long customerId, List<Long> menuItems){
         Orders orders = new Orders(OrderStatus.IN_PROGRESS);
         Customer customer = customerRepository.findById(customerId);
-        orders.setCustomerId(customer);
-        orders.setOrderTime(orders.getOrderTime());
-        orders.setOrderStatus(OrderStatus.IN_PROGRESS);
-        addMenuItemsToOrder(orders, menuItems);
-       return iOrdersRepository.createOrder(orders);
+        if(customer == null && menuItems == null){
+            throw new NotFoundException(String.format("Customer with id %s does not exist in the system! \n\"Menu item with id %s does not exist in the system!\"" , customerId, menuItems));
+        }
+        else if( customer == null && menuItems != null){
+            throw new NotFoundException(String.format("Customer with id %s does not exist in the system!" , customerId));
+
+        }
+        else if( customer != null && menuItems == null){
+            throw new NotFoundException(String.format("Menu item with id %s does not exist in the system" , menuItems));
+
+        }
+        else{
+            orders.setCustomerId(customer);
+            orders.setOrderTime(orders.getOrderTime());
+            orders.setOrderStatus(OrderStatus.IN_PROGRESS);
+            addMenuItemsToOrder(orders, menuItems);
+            return iOrdersRepository.createOrder(orders);
+        }
     }
 
     public HashSet<Orders> getOrdersList(){
@@ -54,16 +69,6 @@ public class OrdersService {
         menuItemsFromDb.forEach(item -> orders.addMenuItem(item));
     }
 
-    private Set<MenuItems> updateMenuItemsToOrder(Orders orders, Set<Long> menuItems) {
-        Set<MenuItems> menuItemsFromDb = new HashSet<>();
-
-        for(Long item : menuItems) {
-            MenuItems menu = iMenuItemsRepository.getMenuItems(item);
-            menuItemsFromDb.add(menu);
-        }
-        menuItemsFromDb.forEach(item -> orders.addMenuItem(item));
-        return menuItemsFromDb;
-    }
 
 
     public Orders getOrdersById(Long ordersId){
@@ -72,9 +77,9 @@ public class OrdersService {
 
 
     public void updateOrder(Long orderId, Orders orders) {
-        Set<Long> menuItems = new HashSet<>();
+        List<Long> menuItems = new ArrayList<>();
         Orders ordersFromDB = getOrdersById(orderId);
-        orders.setMenuItems(updateMenuItemsToOrder(orders, menuItems));
+        addMenuItemsToOrder(orders, menuItems);
         iOrdersRepository.updateOrder(ordersFromDB);
     }
 
@@ -85,7 +90,7 @@ public class OrdersService {
             ordersFromDB.setOrderStatus(OrderStatus.CANCELED);
             iOrdersRepository.cancelOrder(ordersFromDB);
         }
-       else if(ordersFromDB.orderStatus.equals(OrderStatus.IN_DELIVERY)) {
+        else if(ordersFromDB.orderStatus.equals(OrderStatus.IN_DELIVERY)) {
             String message = "The order is in delivery and cannot be canceled!";
             String code = "BAD_REQUEST";
             throw new BusinessException(message,code);
@@ -122,6 +127,11 @@ public class OrdersService {
         ordersFromDB.setOrderStatus(OrderStatus.DELIVERED);
         iOrdersRepository.deliveredOrder(ordersFromDB);
     }
+
+    public Orders getOrderPrice(Long ordersId){
+        return iOrdersRepository.getOrderById(ordersId);
+    }
+
 
 
 

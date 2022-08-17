@@ -27,7 +27,7 @@ public class OrdersRepositoryImpl implements IOrdersRepository {
     @Override
     public void updateOrder(Orders orders) {
 
-         iOrdersRepositorySdj.save(orders);
+        iOrdersRepositorySdj.save(orders);
     }
 
 
@@ -46,9 +46,11 @@ public class OrdersRepositoryImpl implements IOrdersRepository {
     @Override
     public void deliveredOrder(Orders orders) {
         iOrdersRepositorySdj.save(orders);
-
     }
-
+    @Override
+    public Orders getOrderPrice(Long ordersId){
+        return iOrdersRepositorySdj.findById(ordersId).orElseThrow(null);
+    }
 
     @Override
     public Orders getOrderById(Long ordersId){

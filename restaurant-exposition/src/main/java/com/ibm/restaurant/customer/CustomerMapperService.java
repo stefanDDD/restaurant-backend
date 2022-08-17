@@ -2,7 +2,11 @@ package com.ibm.restaurant.customer;
 
 import com.ibm.restaurant.domain.customer.Address;
 import com.ibm.restaurant.domain.customer.Customer;
+import com.ibm.restaurant.domain.tables.Tables;
+import com.ibm.restaurant.tables.TableDto;
 import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
 
 @Service
 public class CustomerMapperService {
@@ -40,4 +44,14 @@ public class CustomerMapperService {
         address.setAddressLine1(addressDto.addressLine1);
         return address;
     }
+
+    public HashSet<CustomerDTO> mapFromDomainList(HashSet<Customer> customerHashSet) {
+        HashSet<CustomerDTO> listAux = new HashSet<>();
+        for (Customer customer : customerHashSet) {
+            listAux.add(mapFromDomain(customer));
+
+        }
+        return listAux;
+    }
+
 }

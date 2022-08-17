@@ -3,8 +3,11 @@ package com.ibm.restaurant.application.customer;
 import com.ibm.restaurant.domain.customer.Address;
 import com.ibm.restaurant.domain.customer.Customer;
 import com.ibm.restaurant.domain.customer.CustomerRepository;
+import com.ibm.restaurant.domain.tables.Tables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
 
 
 @Service
@@ -30,5 +33,11 @@ public class CustomerService {
             customerRepository.updateCustomer(customerFromDB);
         }
     }
+
+    public HashSet<Customer> getCustomerList()
+    {
+        return customerRepository.getCustomerList();
+    }
+
 
 }

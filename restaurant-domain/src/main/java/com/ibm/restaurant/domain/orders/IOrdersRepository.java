@@ -1,11 +1,8 @@
 package com.ibm.restaurant.domain.orders;
 
 
-import com.ibm.restaurant.domain.menuItems.MenuItems;
-
-import javax.persistence.criteria.Order;
 import java.util.HashSet;
-import java.util.List;
+
 
 public interface IOrdersRepository {
 
@@ -22,6 +19,8 @@ public interface IOrdersRepository {
     HashSet<Orders> getOrdersList();
 
     Orders getOrderById(Long ordersId);
+
+    Orders getOrderPrice(Long ordersId);
 
 
 
